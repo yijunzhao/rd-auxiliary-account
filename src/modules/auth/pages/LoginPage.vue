@@ -111,9 +111,14 @@ async function submit() {
 .right-panel { display: flex; align-items: center; justify-content: center; padding: 20px 0; }
 .login-card { width: min(420px, 92%); border-radius: 10px; box-shadow: 0 10px 25px rgba(23, 66, 153, 0.2); }
 .form-title { margin: 0 0 16px; text-align: center; font-size: 34px; font-weight: 700; color: #20252f; }
-.captcha-row { display: flex; gap: 14px; align-items: flex-start; }
-.captcha-input { flex: 1; }
-.captcha-image { width: 90px; height: 38px; margin-top: 2px; border-radius: 4px; cursor: pointer; border: 1px solid #dbe4ff; }
+.captcha-row { display: flex; gap: 14px; align-items: center; min-width: 0; }
+.captcha-input { flex: 1 1 auto; min-width: 0; }
+.captcha-image { flex: 0 0 90px; width: 90px; height: 38px; margin-top: 0; border-radius: 4px; cursor: pointer; border: 1px solid #dbe4ff; display: block; }
 .form-actions { margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
 .forget-link { font-size: 13px; color: #1b4fab; text-decoration: none; }
+
+@media (max-width: 480px) {
+  .captcha-row { gap: 8px; }
+  .captcha-image { flex-basis: 84px; width: 84px; height: 36px; }
+}
 </style>
