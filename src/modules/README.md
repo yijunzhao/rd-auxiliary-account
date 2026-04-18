@@ -11,6 +11,7 @@
 - `material/`：样品及其他管理
 - `summary/`：支出分配
 - `statements/`：报表生成及查询
+- `task/`：任务管理
 
 约定：
 

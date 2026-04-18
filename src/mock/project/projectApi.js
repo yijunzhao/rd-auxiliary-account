@@ -46,7 +46,16 @@ const MODULE_MODAL = {
   'statements-keep-information': { ...DEFAULT_MODAL, width: 1020, columns: 2, okText: '保存' },
   'statements-research-deducted': { ...DEFAULT_MODAL, width: 1040, columns: 2, okText: '保存' },
   'statements-high-tech-reports': { ...DEFAULT_MODAL, width: 1040, columns: 2, okText: '保存' },
-  'statements-statistics-reports': { ...DEFAULT_MODAL, width: 1080, columns: 2, okText: '保存' }
+  'statements-statistics-reports': { ...DEFAULT_MODAL, width: 1080, columns: 2, okText: '保存' },
+  'flow-process-model': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'flow-business-form': { ...DEFAULT_MODAL, width: 1040, columns: 2, okText: '保存' },
+  'flow-process-apply': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '提交申请', cancelText: '取消', okFirst: false },
+  'config-electricity-price-mode': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'config-project-stage': { ...DEFAULT_MODAL, width: 920, columns: 2, okText: '保存' },
+  'config-project-collection': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'config-expense-allocation': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'config-working-hours-input': { ...DEFAULT_MODAL, width: 920, columns: 2, okText: '保存' },
+  'config-workflow': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' }
 }
 
 const MODULES = {
@@ -624,6 +633,71 @@ PROCESS_MODULE_SPECS.forEach((spec) => {
   MODULES[spec.key] = createProcessModule(spec)
 })
 
+const FLOW_MODULE_SPECS = [
+  { key: 'flow-process-model', title: '流程模型', prefix: 'FLM' },
+  { key: 'flow-business-form', title: '业务表单', prefix: 'FLF' },
+  { key: 'flow-process-apply', title: '流程申请', prefix: 'FLA' }
+]
+
+function createFlowModule(spec) {
+  return {
+    title: spec.title,
+    prefix: spec.prefix,
+    toolbar: { ...DEFAULT_TOOLBAR, exportLabel: '导出模板' },
+    columns: [
+      { title: '流程编号', key: 'flowCode', sortable: true, width: 170 },
+      { title: '流程名称', key: 'flowName', width: 220 },
+      { title: '流程分类', key: 'flowCategory', width: 120 },
+      { title: '流程版本', key: 'flowVersion', width: 110 },
+      { title: '关联业务类型', key: 'businessType', width: 170 },
+      { title: '申请人', key: 'applicant', width: 120 },
+      { title: '申请日期', key: 'applyDate', sortable: true, width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '备注', key: 'remark', width: 220 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'flowCode', label: '流程编号', type: 'input', match: 'fuzzy', placeholder: '请输入流程编号' },
+      { key: 'flowName', label: '流程名称', type: 'input', match: 'fuzzy', placeholder: '请输入流程名称' },
+      { key: 'flowCategory', label: '流程分类', type: 'input', match: 'fuzzy', placeholder: '请输入流程分类' },
+      { key: 'businessType', label: '业务类型', type: 'input', match: 'fuzzy', placeholder: '请输入业务类型' },
+      { key: 'flowStatus', label: '流程状态', type: 'select', match: 'exact', options: FLOW_OPTIONS }
+    ],
+    formSchema: [
+      { key: 'flowCode', label: '流程编号', type: 'input', required: true, requiredMessage: '请输入流程编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '流程编号仅支持大写字母、数字、短横线' },
+      { key: 'flowName', label: '流程名称', type: 'input', required: true, requiredMessage: '请输入流程名称', min: 2, max: 120 },
+      { key: 'flowCategory', label: '流程分类', type: 'input', required: true, requiredMessage: '请输入流程分类', min: 2, max: 60 },
+      { key: 'flowVersion', label: '流程版本', type: 'input', required: true, requiredMessage: '请输入流程版本', pattern: '^V\\d+(\\.\\d+)?$', patternMessage: '请输入类似 V1 或 V1.1 的版本号' },
+      { key: 'businessType', label: '关联业务类型', type: 'input', required: true, requiredMessage: '请输入业务类型', min: 2, max: 80 },
+      { key: 'applicant', label: '申请人', type: 'input', required: true, requiredMessage: '请输入申请人', min: 2, max: 30 },
+      { key: 'applyDate', label: '申请日期', type: 'date', required: true, requiredMessage: '请选择申请日期' },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    rows: [
+      {
+        id: `${spec.prefix}001`,
+        flowCode: `${spec.prefix}-2026-001`,
+        flowName: `${spec.title}示例流程`,
+        flowCategory: spec.title.includes('模型') ? '模型管理' : spec.title.includes('表单') ? '表单管理' : '流程申请',
+        flowVersion: 'V1.0',
+        businessType: spec.title,
+        applicant: '易君召',
+        applyDate: '2026-04-17',
+        flowStatus: '审批通过',
+        remark: '系统初始化示例数据',
+        status: '启用',
+        updatedAt: '2026-04-17'
+      }
+    ]
+  }
+}
+
+FLOW_MODULE_SPECS.forEach((spec) => {
+  MODULES[spec.key] = createFlowModule(spec)
+})
+
 const EXPENSE_MODULE_SPECS = [
   { key: 'expense-personnellabor', title: '人员人工费用', prefix: 'EPL' },
   { key: 'expense-directinvestment', title: '直接投入费用', prefix: 'EDI' },
@@ -645,6 +719,304 @@ const STATEMENT_MODULE_SPECS = [
   { key: 'statements-research-deducted', title: '加计扣除相关报表', prefix: 'SRD' },
   { key: 'statements-high-tech-reports', title: '高新技术企业相关报表', prefix: 'SHT' },
   { key: 'statements-statistics-reports', title: '研发活动统计报表', prefix: 'SST' }
+]
+
+const TASK_MODULE_SPECS = [
+  { key: 'task-allprocess', title: '所有任务', prefix: 'TAP' },
+  { key: 'task-myprocess', title: '我的任务', prefix: 'TMP' },
+  { key: 'task-todo', title: '待办任务', prefix: 'TTD' },
+  { key: 'task-finished', title: '已办任务', prefix: 'TFN' },
+  { key: 'task-flow-cc', title: '抄送我的', prefix: 'TCC' },
+  { key: 'task-my-cc', title: '我的抄送', prefix: 'TMC' }
+]
+
+const CONFIG_MODULE_SPECS = [
+  {
+    key: 'config-electricity-price-mode',
+    title: '电费归集模式配置',
+    prefix: 'CEM',
+    columns: [
+      { title: '模式编号', key: 'modeCode', sortable: true, width: 140 },
+      { title: '模式名称', key: 'modeName', width: 170 },
+      { title: '电压等级', key: 'voltageLevel', width: 120 },
+      { title: '归集规则', key: 'collectionRule', width: 160 },
+      { title: '单价(元/度)', key: 'unitPrice', sortable: true, width: 120 },
+      { title: '税率(%)', key: 'taxRate', sortable: true, width: 100 },
+      { title: '生效日期', key: 'effectiveDate', sortable: true, width: 120 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'modeCode', label: '模式编号', type: 'input', match: 'fuzzy', placeholder: '请输入模式编号' },
+      { key: 'modeName', label: '模式名称', type: 'input', match: 'fuzzy', placeholder: '请输入模式名称' },
+      { key: 'voltageLevel', label: '电压等级', type: 'select', match: 'exact', options: ['高压', '中压', '低压'] },
+      { key: 'effectiveDate', label: '生效日期', type: 'input', match: 'fuzzy', placeholder: 'YYYY-MM-DD' }
+    ],
+    formSchema: [
+      { key: 'modeCode', label: '模式编号', type: 'input', required: true, requiredMessage: '请输入模式编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '模式编号仅支持大写字母、数字、短横线' },
+      { key: 'modeName', label: '模式名称', type: 'input', required: true, requiredMessage: '请输入模式名称', min: 2, max: 60 },
+      { key: 'voltageLevel', label: '电压等级', type: 'select', options: ['高压', '中压', '低压'], required: true, requiredMessage: '请选择电压等级' },
+      { key: 'collectionRule', label: '归集规则', type: 'select', options: ['按项目电表归集', '按面积比例归集', '按工时比例归集'], required: true, requiredMessage: '请选择归集规则' },
+      { key: 'unitPrice', label: '单价(元/度)', type: 'number', required: true, requiredMessage: '请输入电费单价', minValue: 0, maxValue: 9999 },
+      { key: 'taxRate', label: '税率(%)', type: 'number', required: true, requiredMessage: '请输入税率', minValue: 0, maxValue: 100 },
+      { key: 'effectiveDate', label: '生效日期', type: 'date', required: true, requiredMessage: '请选择生效日期' },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CEM001',
+      modeCode: 'ELEC-MODE-001',
+      modeName: '研发线体电费归集模式',
+      voltageLevel: '中压',
+      collectionRule: '按工时比例归集',
+      unitPrice: 0.86,
+      taxRate: 13,
+      effectiveDate: '2026-01-01',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  },
+  {
+    key: 'config-project-stage',
+    title: '项目阶段配置',
+    prefix: 'CPS',
+    columns: [
+      { title: '阶段编号', key: 'stageCode', sortable: true, width: 130 },
+      { title: '阶段名称', key: 'stageName', width: 160 },
+      { title: '阶段类型', key: 'stageType', width: 130 },
+      { title: '开始节点', key: 'startNode', width: 140 },
+      { title: '结束节点', key: 'endNode', width: 140 },
+      { title: '是否必经', key: 'requiredPass', width: 100 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'stageCode', label: '阶段编号', type: 'input', match: 'fuzzy', placeholder: '请输入阶段编号' },
+      { key: 'stageName', label: '阶段名称', type: 'input', match: 'fuzzy', placeholder: '请输入阶段名称' },
+      { key: 'stageType', label: '阶段类型', type: 'select', match: 'exact', options: ['立项', '研发', '测试', '验收'] }
+    ],
+    formSchema: [
+      { key: 'stageCode', label: '阶段编号', type: 'input', required: true, requiredMessage: '请输入阶段编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '阶段编号仅支持大写字母、数字、短横线' },
+      { key: 'stageName', label: '阶段名称', type: 'input', required: true, requiredMessage: '请输入阶段名称', min: 2, max: 60 },
+      { key: 'stageType', label: '阶段类型', type: 'select', options: ['立项', '研发', '测试', '验收'], required: true, requiredMessage: '请选择阶段类型' },
+      { key: 'startNode', label: '开始节点', type: 'input', required: true, requiredMessage: '请输入开始节点', min: 2, max: 60 },
+      { key: 'endNode', label: '结束节点', type: 'input', required: true, requiredMessage: '请输入结束节点', min: 2, max: 60 },
+      { key: 'requiredPass', label: '是否必经', type: 'select', options: BOOLEAN_OPTIONS, required: true, requiredMessage: '请选择是否必经' },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CPS001',
+      stageCode: 'STAGE-001',
+      stageName: '方案设计',
+      stageType: '研发',
+      startNode: '需求评审',
+      endNode: '方案评审',
+      requiredPass: '是',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  },
+  {
+    key: 'config-project-collection',
+    title: '项目归集配置',
+    prefix: 'CPC',
+    columns: [
+      { title: '归集编号', key: 'collectionCode', sortable: true, width: 140 },
+      { title: '归集名称', key: 'collectionName', width: 180 },
+      { title: '费用类别', key: 'expenseCategory', width: 130 },
+      { title: '分摊规则', key: 'allocationRule', width: 170 },
+      { title: '会计科目', key: 'accountCode', width: 140 },
+      { title: '是否资本化', key: 'capitalized', width: 100 },
+      { title: '生效日期', key: 'effectiveDate', sortable: true, width: 120 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'collectionCode', label: '归集编号', type: 'input', match: 'fuzzy', placeholder: '请输入归集编号' },
+      { key: 'collectionName', label: '归集名称', type: 'input', match: 'fuzzy', placeholder: '请输入归集名称' },
+      { key: 'expenseCategory', label: '费用类别', type: 'select', match: 'exact', options: ['人工', '材料', '折旧', '设计'] }
+    ],
+    formSchema: [
+      { key: 'collectionCode', label: '归集编号', type: 'input', required: true, requiredMessage: '请输入归集编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '归集编号仅支持大写字母、数字、短横线' },
+      { key: 'collectionName', label: '归集名称', type: 'input', required: true, requiredMessage: '请输入归集名称', min: 2, max: 80 },
+      { key: 'expenseCategory', label: '费用类别', type: 'select', options: ['人工', '材料', '折旧', '设计'], required: true, requiredMessage: '请选择费用类别' },
+      { key: 'allocationRule', label: '分摊规则', type: 'select', options: ['按项目工时', '按项目人数', '按预算比例'], required: true, requiredMessage: '请选择分摊规则' },
+      { key: 'accountCode', label: '会计科目', type: 'input', required: true, requiredMessage: '请输入会计科目', min: 4, max: 32, pattern: '^[0-9-]+$', patternMessage: '会计科目格式不正确' },
+      { key: 'capitalized', label: '是否资本化', type: 'select', options: BOOLEAN_OPTIONS, required: true, requiredMessage: '请选择是否资本化' },
+      { key: 'effectiveDate', label: '生效日期', type: 'date', required: true, requiredMessage: '请选择生效日期' },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CPC001',
+      collectionCode: 'COLL-001',
+      collectionName: '研发材料费归集',
+      expenseCategory: '材料',
+      allocationRule: '按项目工时',
+      accountCode: '6602-04',
+      capitalized: '否',
+      effectiveDate: '2026-01-01',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  },
+  {
+    key: 'config-expense-allocation',
+    title: '支出分配配置',
+    prefix: 'CEA',
+    columns: [
+      { title: '分配编号', key: 'allocationCode', sortable: true, width: 140 },
+      { title: '分配名称', key: 'allocationName', width: 180 },
+      { title: '分配维度', key: 'dimension', width: 130 },
+      { title: '分配规则', key: 'ruleName', width: 170 },
+      { title: '四舍五入', key: 'roundingPolicy', width: 110 },
+      { title: '允许手工调整', key: 'manualAdjust', width: 120 },
+      { title: '生效日期', key: 'effectiveDate', sortable: true, width: 120 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'allocationCode', label: '分配编号', type: 'input', match: 'fuzzy', placeholder: '请输入分配编号' },
+      { key: 'allocationName', label: '分配名称', type: 'input', match: 'fuzzy', placeholder: '请输入分配名称' },
+      { key: 'dimension', label: '分配维度', type: 'select', match: 'exact', options: ['项目', '部门', '费用类型'] }
+    ],
+    formSchema: [
+      { key: 'allocationCode', label: '分配编号', type: 'input', required: true, requiredMessage: '请输入分配编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '分配编号仅支持大写字母、数字、短横线' },
+      { key: 'allocationName', label: '分配名称', type: 'input', required: true, requiredMessage: '请输入分配名称', min: 2, max: 80 },
+      { key: 'dimension', label: '分配维度', type: 'select', options: ['项目', '部门', '费用类型'], required: true, requiredMessage: '请选择分配维度' },
+      { key: 'ruleName', label: '分配规则', type: 'select', options: ['按工时占比', '按预算占比', '按实际发生额'], required: true, requiredMessage: '请选择分配规则' },
+      { key: 'roundingPolicy', label: '四舍五入', type: 'select', options: ['保留2位小数', '保留4位小数'], required: true, requiredMessage: '请选择四舍五入策略' },
+      { key: 'manualAdjust', label: '允许手工调整', type: 'select', options: BOOLEAN_OPTIONS, required: true, requiredMessage: '请选择是否允许手工调整' },
+      { key: 'effectiveDate', label: '生效日期', type: 'date', required: true, requiredMessage: '请选择生效日期' },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CEA001',
+      allocationCode: 'ALLOC-001',
+      allocationName: '研发支出月度分配规则',
+      dimension: '项目',
+      ruleName: '按工时占比',
+      roundingPolicy: '保留2位小数',
+      manualAdjust: '是',
+      effectiveDate: '2026-01-01',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  },
+  {
+    key: 'config-working-hours-input',
+    title: '工时录入配置',
+    prefix: 'CWH',
+    columns: [
+      { title: '配置编号', key: 'configCode', sortable: true, width: 140 },
+      { title: '配置名称', key: 'configName', width: 180 },
+      { title: '人员类型', key: 'personnelType', width: 120 },
+      { title: '最小工时', key: 'minHours', sortable: true, width: 100 },
+      { title: '最大工时', key: 'maxHours', sortable: true, width: 100 },
+      { title: '填报截止日', key: 'deadlineDay', width: 110 },
+      { title: '审批要求', key: 'approvalRequired', width: 100 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'configCode', label: '配置编号', type: 'input', match: 'fuzzy', placeholder: '请输入配置编号' },
+      { key: 'configName', label: '配置名称', type: 'input', match: 'fuzzy', placeholder: '请输入配置名称' },
+      { key: 'personnelType', label: '人员类型', type: 'select', match: 'exact', options: ['研发人员', '管理人员', '测试人员'] }
+    ],
+    formSchema: [
+      { key: 'configCode', label: '配置编号', type: 'input', required: true, requiredMessage: '请输入配置编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '配置编号仅支持大写字母、数字、短横线' },
+      { key: 'configName', label: '配置名称', type: 'input', required: true, requiredMessage: '请输入配置名称', min: 2, max: 80 },
+      { key: 'personnelType', label: '人员类型', type: 'select', options: ['研发人员', '管理人员', '测试人员'], required: true, requiredMessage: '请选择人员类型' },
+      { key: 'minHours', label: '最小工时', type: 'number', required: true, requiredMessage: '请输入最小工时', minValue: 0, maxValue: 744 },
+      { key: 'maxHours', label: '最大工时', type: 'number', required: true, requiredMessage: '请输入最大工时', minValue: 0, maxValue: 744 },
+      { key: 'deadlineDay', label: '填报截止日', type: 'number', required: true, requiredMessage: '请输入填报截止日', minValue: 1, maxValue: 31 },
+      { key: 'approvalRequired', label: '审批要求', type: 'select', options: BOOLEAN_OPTIONS, required: true, requiredMessage: '请选择审批要求' },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CWH001',
+      configCode: 'WH-INPUT-001',
+      configName: '研发人员月度工时填报策略',
+      personnelType: '研发人员',
+      minHours: 0,
+      maxHours: 186,
+      deadlineDay: 5,
+      approvalRequired: '是',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  },
+  {
+    key: 'config-workflow',
+    title: '流程配置',
+    prefix: 'CWF',
+    columns: [
+      { title: '流程编号', key: 'workflowCode', sortable: true, width: 140 },
+      { title: '流程名称', key: 'workflowName', width: 200 },
+      { title: '业务类型', key: 'bizType', width: 130 },
+      { title: '发起角色', key: 'startRole', width: 120 },
+      { title: '审批角色', key: 'approveRole', width: 120 },
+      { title: '超时(小时)', key: 'timeoutHours', sortable: true, width: 110 },
+      { title: '启用版本', key: 'versionNo', width: 100 },
+      { title: '填报人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'workflowCode', label: '流程编号', type: 'input', match: 'fuzzy', placeholder: '请输入流程编号' },
+      { key: 'workflowName', label: '流程名称', type: 'input', match: 'fuzzy', placeholder: '请输入流程名称' },
+      { key: 'bizType', label: '业务类型', type: 'select', match: 'exact', options: ['项目管理', '费用归集', '工时填报', '报表发布'] }
+    ],
+    formSchema: [
+      { key: 'workflowCode', label: '流程编号', type: 'input', required: true, requiredMessage: '请输入流程编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '流程编号仅支持大写字母、数字、短横线' },
+      { key: 'workflowName', label: '流程名称', type: 'input', required: true, requiredMessage: '请输入流程名称', min: 2, max: 80 },
+      { key: 'bizType', label: '业务类型', type: 'select', options: ['项目管理', '费用归集', '工时填报', '报表发布'], required: true, requiredMessage: '请选择业务类型' },
+      { key: 'startRole', label: '发起角色', type: 'input', required: true, requiredMessage: '请输入发起角色', min: 2, max: 40 },
+      { key: 'approveRole', label: '审批角色', type: 'input', required: true, requiredMessage: '请输入审批角色', min: 2, max: 40 },
+      { key: 'timeoutHours', label: '超时(小时)', type: 'number', required: true, requiredMessage: '请输入超时时间', minValue: 1, maxValue: 720 },
+      { key: 'versionNo', label: '启用版本', type: 'input', required: true, requiredMessage: '请输入版本号', min: 2, max: 20 },
+      { key: 'owner', label: '填报人', type: 'input', required: true, requiredMessage: '请输入填报人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'CWF001',
+      workflowCode: 'WF-CONFIG-001',
+      workflowName: '研发费用归集审批流程',
+      bizType: '费用归集',
+      startRole: '项目会计',
+      approveRole: '财务经理',
+      timeoutHours: 48,
+      versionNo: 'v1.0.0',
+      owner: '易君召',
+      flowStatus: '审批通过',
+      status: '启用',
+      updatedAt: '2026-04-17'
+    }
+  }
 ]
 
 function createExpenseModule(spec) {
@@ -760,6 +1132,194 @@ function createStatementModule(spec) {
 
 STATEMENT_MODULE_SPECS.forEach((spec) => {
   MODULES[spec.key] = createStatementModule(spec)
+})
+
+const TASK_PROJECT_POOL = [
+  { code: 'RD-PJT-2026-001', name: '新一代智能配电控制器研发' },
+  { code: 'RD-PJT-2026-002', name: '电机驱动算法升级项目' },
+  { code: 'RD-PJT-2026-003', name: '工业网关可靠性提升项目' },
+  { code: 'RD-PJT-2026-004', name: '高压柜温升优化项目' },
+  { code: 'RD-PJT-2026-005', name: '边缘计算采集终端研发' },
+  { code: 'RD-PJT-2026-006', name: '储能BMS通信协议适配项目' }
+]
+
+const TASK_PROCESS_POOL = [
+  { name: '项目立项审批流程', bizPrefix: 'APR', titlePrefix: '项目立项审批' },
+  { name: '项目变更审批流程', bizPrefix: 'CHG', titlePrefix: '项目变更申请审批' },
+  { name: '研发工时填报审核流程', bizPrefix: 'HRS', titlePrefix: '月度工时填报审核' },
+  { name: '研发费用归集审批流程', bizPrefix: 'EXP', titlePrefix: '研发费用归集单审批' },
+  { name: '项目阶段转换审批流程', bizPrefix: 'STG', titlePrefix: '项目阶段转换审批' },
+  { name: '项目文档归档审批流程', bizPrefix: 'DOC', titlePrefix: '项目文档归档审批' }
+]
+
+const TASK_STARTER_POOL = ['易君召', '张敏', '王磊', '李娜', '周强', '陈杰', '赵婷', '孙浩']
+const TASK_ASSIGNEE_POOL = ['易君召', '刘洋', '吴迪', '郑楠', '冯倩', '郭凯', '王磊', '李娜']
+const TASK_CC_POOL = ['易君召', '王磊', '李娜', '张敏', '赵婷', '刘洋']
+const TASK_PRIORITY_POOL = ['高', '中', '中', '低']
+const TASK_FLOW_POOL = ['审批中', '审批通过', '审批中', '审批驳回', '审批通过', '草稿']
+const TASK_STATUS_POOL = ['启用', '启用', '启用', '草稿', '停用']
+
+const TASK_DUE_DATES = [
+  '2026-04-19', '2026-04-20', '2026-04-21', '2026-04-22', '2026-04-23', '2026-04-24',
+  '2026-04-25', '2026-04-26', '2026-04-27', '2026-04-28', '2026-04-29', '2026-04-30',
+  '2026-05-06', '2026-05-08', '2026-05-10', '2026-05-12'
+]
+
+const TASK_UPDATED_DATES = [
+  '2026-04-08', '2026-04-09', '2026-04-10', '2026-04-11', '2026-04-12', '2026-04-13',
+  '2026-04-14', '2026-04-15', '2026-04-16', '2026-04-17', '2026-04-18'
+]
+
+function pad3(n) {
+  return String(n).padStart(3, '0')
+}
+
+function buildTaskMasterRows() {
+  const rows = []
+  for (let i = 1; i <= 42; i++) {
+    const project = TASK_PROJECT_POOL[(i - 1) % TASK_PROJECT_POOL.length]
+    const process = TASK_PROCESS_POOL[(i - 1) % TASK_PROCESS_POOL.length]
+    const priority = TASK_PRIORITY_POOL[(i - 1) % TASK_PRIORITY_POOL.length]
+    let flowStatus = TASK_FLOW_POOL[(i - 1) % TASK_FLOW_POOL.length]
+    const starter = TASK_STARTER_POOL[(i + 1) % TASK_STARTER_POOL.length]
+    let assignee = TASK_ASSIGNEE_POOL[(i + 2) % TASK_ASSIGNEE_POOL.length]
+    const ccUser = TASK_CC_POOL[(i + 3) % TASK_CC_POOL.length]
+    const dueDate = TASK_DUE_DATES[(i - 1) % TASK_DUE_DATES.length]
+    const updatedAt = TASK_UPDATED_DATES[(i - 1) % TASK_UPDATED_DATES.length]
+
+    if (i % 5 === 0 || i % 7 === 0) {
+      assignee = '易君召'
+    }
+    if (i % 6 === 0) {
+      flowStatus = '审批中'
+    }
+    if (i % 8 === 0) {
+      flowStatus = '审批通过'
+    }
+    if (i % 11 === 0) {
+      flowStatus = '审批驳回'
+    }
+
+    rows.push({
+      id: `TASK${pad3(i)}`,
+      taskCode: `TK-2026-${pad3(i)}`,
+      taskTitle: `${process.titlePrefix} - ${project.name}`,
+      processName: process.name,
+      businessCode: `BIZ-${process.bizPrefix}-2026-${pad3(i)}`,
+      projectCode: project.code,
+      projectName: project.name,
+      starter,
+      assignee,
+      ccUser,
+      priority,
+      dueDate,
+      flowStatus,
+      remark: `${project.code} / 当前节点：${flowStatus === '审批中' ? '部门负责人审批' : flowStatus === '审批通过' ? '流程结束' : flowStatus === '审批驳回' ? '发起人修订' : '待提交'}`,
+      status: TASK_STATUS_POOL[(i - 1) % TASK_STATUS_POOL.length],
+      updatedAt
+    })
+  }
+  return rows
+}
+
+function pickTaskRowsByModule(moduleKey, prefix) {
+  const master = buildTaskMasterRows()
+  let picked = []
+
+  if (moduleKey === 'task-allprocess') {
+    picked = master.slice(0, 26)
+  } else if (moduleKey === 'task-myprocess') {
+    picked = master.filter((row) => row.starter === '易君召').slice(0, 18)
+  } else if (moduleKey === 'task-todo') {
+    picked = master
+      .filter((row) => row.assignee === '易君召' && row.flowStatus === '审批中')
+      .map((row) => ({ ...row, priority: row.priority === '低' ? '中' : row.priority }))
+      .slice(0, 16)
+  } else if (moduleKey === 'task-finished') {
+    picked = master
+      .filter((row) => row.assignee === '易君召' && (row.flowStatus === '审批通过' || row.flowStatus === '审批驳回'))
+      .slice(0, 16)
+  } else if (moduleKey === 'task-flow-cc') {
+    picked = master
+      .filter((row) => row.ccUser === '易君召' && row.starter !== '易君召')
+      .map((row) => ({ ...row, remark: `${row.remark}，抄送对象：易君召` }))
+      .slice(0, 16)
+  } else if (moduleKey === 'task-my-cc') {
+    picked = master
+      .filter((row) => row.starter === '易君召' && row.ccUser !== '易君召')
+      .map((row) => ({ ...row, remark: `${row.remark}，我发起并抄送：${row.ccUser}` }))
+      .slice(0, 16)
+  }
+
+  if (picked.length < 16) {
+    picked = master.slice(0, 16)
+  }
+
+  return picked.map((row, idx) => ({
+    ...row,
+    id: `${prefix}${pad3(idx + 1)}`
+  }))
+}
+
+function createTaskModule(spec) {
+  return {
+    title: spec.title,
+    prefix: spec.prefix,
+    toolbar: { ...DEFAULT_TOOLBAR, exportLabel: '导出任务' },
+    columns: [
+      { title: '任务编号', key: 'taskCode', sortable: true, width: 170 },
+      { title: '任务标题', key: 'taskTitle', width: 260 },
+      { title: '流程名称', key: 'processName', width: 170 },
+      { title: '业务单号', key: 'businessCode', sortable: true, width: 170 },
+      { title: '发起人', key: 'starter', width: 120 },
+      { title: '当前处理人', key: 'assignee', width: 120 },
+      { title: '优先级', key: 'priority', width: 100 },
+      { title: '截止日期', key: 'dueDate', sortable: true, width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'taskCode', label: '任务编号', type: 'input', match: 'fuzzy', placeholder: '请输入任务编号' },
+      { key: 'taskTitle', label: '任务标题', type: 'input', match: 'fuzzy', placeholder: '请输入任务标题' },
+      { key: 'processName', label: '流程名称', type: 'input', match: 'fuzzy', placeholder: '请输入流程名称' },
+      { key: 'assignee', label: '当前处理人', type: 'input', match: 'fuzzy', placeholder: '请输入处理人' },
+      { key: 'flowStatus', label: '流程状态', type: 'select', match: 'exact', options: FLOW_OPTIONS }
+    ],
+    formSchema: [
+      { key: 'taskCode', label: '任务编号', type: 'input', required: true, requiredMessage: '请输入任务编号', min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '任务编号仅支持大写字母、数字、短横线' },
+      { key: 'taskTitle', label: '任务标题', type: 'input', required: true, requiredMessage: '请输入任务标题', min: 2, max: 120 },
+      { key: 'processName', label: '流程名称', type: 'input', required: true, requiredMessage: '请输入流程名称', min: 2, max: 80 },
+      { key: 'businessCode', label: '业务单号', type: 'input', required: true, requiredMessage: '请输入业务单号', min: 4, max: 40, pattern: '^[A-Z0-9-]+$', patternMessage: '业务单号格式不正确' },
+      { key: 'starter', label: '发起人', type: 'input', required: true, requiredMessage: '请输入发起人', min: 2, max: 30 },
+      { key: 'assignee', label: '当前处理人', type: 'input', required: true, requiredMessage: '请输入当前处理人', min: 2, max: 30 },
+      { key: 'priority', label: '优先级', type: 'select', options: ['高', '中', '低'], required: true, requiredMessage: '请选择优先级' },
+      { key: 'dueDate', label: '截止日期', type: 'date', required: true, requiredMessage: '请选择截止日期' },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    rows: pickTaskRowsByModule(spec.key, spec.prefix)
+  }
+}
+
+TASK_MODULE_SPECS.forEach((spec) => {
+  MODULES[spec.key] = createTaskModule(spec)
+})
+
+function createConfigModule(spec) {
+  return {
+    title: spec.title,
+    prefix: spec.prefix,
+    toolbar: { ...DEFAULT_TOOLBAR },
+    columns: spec.columns,
+    querySchema: spec.querySchema,
+    formSchema: spec.formSchema,
+    rows: [{ ...spec.row }]
+  }
+}
+
+CONFIG_MODULE_SPECS.forEach((spec) => {
+  MODULES[spec.key] = createConfigModule(spec)
 })
 
 const PROJECT_NAME_POOL = ['张敏', '王磊', '李娜', '周强', '陈杰', '刘洋', '赵婷', '孙浩', '吴迪', '郑楠', '冯倩', '郭凯']

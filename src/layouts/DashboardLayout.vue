@@ -160,10 +160,75 @@ const menuOptions = [
       { key: '/statements/statistics-reports', label: '研发活动统计报表', icon: renderIcon(BarChartOutline) }
     ]
   },
-  { key: 'flow', label: '流程管理', icon: renderIcon(GitNetworkOutline) },
-  { key: 'task', label: '任务管理', icon: renderIcon(CheckboxOutline) },
-  { key: 'system', label: '系统管理', icon: renderIcon(SettingsOutline) },
-  { key: 'config', label: '配置中心', icon: renderIcon(BuildOutline) }
+  {
+    key: 'flow',
+    label: '流程管理',
+    icon: renderIcon(GitNetworkOutline),
+    children: [
+      { key: '/flowable/model/modelDesigner', label: '流程模型', icon: renderIcon(GitMergeOutline) },
+      { key: '/flowable/SysCustomForm/SysCustomFormList', label: '业务表单', icon: renderIcon(DocumentAttachOutline) },
+      { key: '/flowable/task/record/index', label: '流程申请', icon: renderIcon(LibraryOutline) }
+    ]
+  },
+  {
+    key: 'task',
+    label: '任务管理',
+    icon: renderIcon(CheckboxOutline),
+    children: [
+      { key: '/flowable/task/allprocess/index', label: '所有任务', icon: renderIcon(ListOutline) },
+      { key: '/flowable/task/myprocess/index', label: '我的任务', icon: renderIcon(PeopleOutline) },
+      { key: '/flowable/task/todo/index', label: '待办任务', icon: renderIcon(CalendarOutline) },
+      { key: '/flowable/task/finished/index', label: '已办任务', icon: renderIcon(CheckboxOutline) },
+      { key: '/flowable/FlowCc/FowCcList', label: '抄送我的', icon: renderIcon(DocumentOutline) },
+      { key: '/flowable/MyCc/MyCcList', label: '我的抄送', icon: renderIcon(DocumentTextOutline) }
+    ]
+  },
+  {
+    key: 'system',
+    label: '系统管理',
+    icon: renderIcon(SettingsOutline),
+    children: [
+      { key: '/system/depart', label: '部门管理', icon: renderIcon(PeopleOutline) },
+      { key: '/system/position', label: '职务管理', icon: renderIcon(BriefcaseOutline) }
+    ]
+  },
+  {
+    key: 'config',
+    label: '配置中心',
+    icon: renderIcon(BuildOutline),
+    children: [
+      {
+        key: '/compliance/config/cmcfelectricitypriceconfig/cmcfElectricityPriceConfigList',
+        label: '电费归集模式配置',
+        icon: renderIcon(BuildOutline)
+      },
+      {
+        key: '/compliance/config/cmcfprojectstageconfig/cmcfProjectStageConfigList',
+        label: '项目阶段配置',
+        icon: renderIcon(GitMergeOutline)
+      },
+      {
+        key: '/compliance/config/cmcfprojectcollectionconfig/cmcfProjectCollectionConfigList',
+        label: '项目归集配置',
+        icon: renderIcon(FunnelOutline)
+      },
+      {
+        key: '/compliance/config/cmcfexpenseallocationconfig/cmcfExpenseAllocationConfigList',
+        label: '支出分配配置',
+        icon: renderIcon(BarChartOutline)
+      },
+      {
+        key: '/compliance/config/cmcfworkinghoursinputconfig/cmcfWorkingHoursInputConfigList',
+        label: '工时录入配置',
+        icon: renderIcon(CalendarOutline)
+      },
+      {
+        key: '/compliance/config/cmcfworkflowconfig/cmcfWorkFlowConfigList',
+        label: '流程配置',
+        icon: renderIcon(GitNetworkOutline)
+      }
+    ]
+  }
 ]
 
 const companyBaseKeys = [
@@ -250,6 +315,35 @@ const statementBaseKeys = [
   '/statements/statistics-reports'
 ]
 
+const flowBaseKeys = [
+  '/flowable/model/modelDesigner',
+  '/flowable/SysCustomForm/SysCustomFormList',
+  '/flowable/task/record/index'
+]
+
+const taskBaseKeys = [
+  '/flowable/task/allprocess/index',
+  '/flowable/task/myprocess/index',
+  '/flowable/task/todo/index',
+  '/flowable/task/finished/index',
+  '/flowable/FlowCc/FowCcList',
+  '/flowable/MyCc/MyCcList'
+]
+
+const systemBaseKeys = [
+  '/system/depart',
+  '/system/position'
+]
+
+const configBaseKeys = [
+  '/compliance/config/cmcfelectricitypriceconfig/cmcfElectricityPriceConfigList',
+  '/compliance/config/cmcfprojectstageconfig/cmcfProjectStageConfigList',
+  '/compliance/config/cmcfprojectcollectionconfig/cmcfProjectCollectionConfigList',
+  '/compliance/config/cmcfexpenseallocationconfig/cmcfExpenseAllocationConfigList',
+  '/compliance/config/cmcfworkinghoursinputconfig/cmcfWorkingHoursInputConfigList',
+  '/compliance/config/cmcfworkflowconfig/cmcfWorkFlowConfigList'
+]
+
 const activeMenu = computed(() => {
   const p = route.path
   const hit = companyBaseKeys.find((k) => p.startsWith(k))
@@ -266,10 +360,18 @@ const activeMenu = computed(() => {
   if (allocationHit) return allocationHit
   const statementHit = statementBaseKeys.find((k) => p.startsWith(k))
   if (statementHit) return statementHit
+  const flowHit = flowBaseKeys.find((k) => p.startsWith(k))
+  if (flowHit) return flowHit
+  const taskHit = taskBaseKeys.find((k) => p.startsWith(k))
+  if (taskHit) return taskHit
+  const systemHit = systemBaseKeys.find((k) => p.startsWith(k))
+  if (systemHit) return systemHit
+  const configHit = configBaseKeys.find((k) => p.startsWith(k))
+  if (configHit) return configHit
   return p
 })
 
-const expandedKeys = ref(['company', 'project', 'process', 'expense', 'material', 'allocation', 'report'])
+const expandedKeys = ref(['company', 'project', 'process', 'expense', 'material', 'allocation', 'report', 'flow', 'task', 'system', 'config'])
 const siderCollapsed = ref(false)
 const breadcrumbLabel = computed(() => route.meta?.breadcrumb || '首页')
 
@@ -348,6 +450,7 @@ function toggleSider() {
 .sider-menu :deep(.n-menu-item-content--selected) { background: linear-gradient(90deg, #e7f1ff 0%, #f2f7ff 100%) !important; color: #135fce !important; box-shadow: inset 0 0 0 1px #cfe2ff; }
 .sider-menu :deep(.n-menu-item-content--selected .n-menu-item-content__icon) { color: #135fce; }
 .sider-menu :deep(.n-submenu-children) { margin: 2px 0 4px; }
+.sider-menu :deep(.n-submenu-children .n-menu-item-content) { padding-left: 28px !important; }
 .dashboard-header { height: 48px; background: linear-gradient(90deg, #48a8ff 0%, #6bb7ff 100%); color: #f7fbff; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-bottom: 1px solid #8cc7ff; }
 .header-left { display: flex; align-items: center; gap: 10px; }
 .header-hamburger { font-size: 18px; cursor: pointer; user-select: none; }

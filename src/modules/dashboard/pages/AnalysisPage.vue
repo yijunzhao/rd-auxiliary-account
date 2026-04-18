@@ -1,5 +1,5 @@
 ﻿<script setup>
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
 import { NButton, NCard, NSpace, NSelect } from 'naive-ui'
 
@@ -12,10 +12,30 @@ const yearOptions = [
 
 const dashboard = { projectCount: 3, projectMax: 100, staffCount: 0, staffMax: 100, incomeRatio: 0, incomeRatioMax: 100 }
 const projectInvestData = [{ name: '暂无数据', value: 1 }]
-const workHourData = [
-  { name: '研发费用归合集能管理系统', value: 0 },
-  { name: '测试文项目', value: 0 }
-]
+const workHourDataByYear = {
+  '2026': [
+    { name: '研发费用归集合能管理系统', value: 1860 },
+    { name: 'AI 质检平台升级', value: 1325 },
+    { name: '移动端工单优化', value: 940 },
+    { name: '成本核算自动化', value: 1180 },
+    { name: '数据中台接口治理', value: 760 }
+  ],
+  '2025': [
+    { name: '研发费用归集合能管理系统', value: 1520 },
+    { name: 'AI 质检平台升级', value: 1100 },
+    { name: '移动端工单优化', value: 860 },
+    { name: '成本核算自动化', value: 1035 },
+    { name: '数据中台接口治理', value: 690 }
+  ],
+  '2024': [
+    { name: '研发费用归集合能管理系统', value: 1280 },
+    { name: 'AI 质检平台升级', value: 920 },
+    { name: '移动端工单优化', value: 740 },
+    { name: '成本核算自动化', value: 860 },
+    { name: '数据中台接口治理', value: 550 }
+  ]
+}
+const workHourData = computed(() => workHourDataByYear[year.value] ?? workHourDataByYear['2026'])
 const expenseData = [
   { name: '人员人工费用', value: 1 }, { name: '直接投入费用', value: 1 }, { name: '折旧费用', value: 1 },
   { name: '长期待摊费用', value: 1 }, { name: '无形资产摊销', value: 1 }, { name: '新产品设计费用', value: 1 },
@@ -47,7 +67,30 @@ function renderCharts() {
   createChart(gaugeStaffRef, buildGaugeOption(dashboard.staffCount, dashboard.staffMax, '人'))
   createChart(pieInvestRef, { tooltip: { trigger: 'item' }, series: [{ type: 'pie', radius: '72%', center: ['50%', '54%'], data: projectInvestData, label: { show: false }, itemStyle: { color: '#cfcfcf' } }] })
   createChart(gaugeIncomeRef, buildGaugeOption(dashboard.incomeRatio, dashboard.incomeRatioMax, '万'))
-  createChart(barHourRef, { grid: { left: 46, right: 18, top: 26, bottom: 48 }, xAxis: { type: 'category', data: workHourData.map((i) => i.name), axisLabel: { color: '#8d97a8', fontSize: 11 }, axisLine: { lineStyle: { color: '#d7dbe4' } } }, yAxis: { type: 'value', name: '工时数', nameTextStyle: { color: '#8d97a8', fontSize: 11 }, axisLabel: { color: '#8d97a8' }, splitLine: { lineStyle: { color: '#eef1f7' } } }, series: [{ type: 'bar', data: workHourData.map((i) => i.value), itemStyle: { color: '#2f8cff' }, barWidth: 30 }] })
+  createChart(barHourRef, {
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: 46, right: 18, top: 26, bottom: 72 },
+    xAxis: {
+      type: 'category',
+      data: workHourData.value.map((i) => i.name),
+      axisLabel: { color: '#8d97a8', fontSize: 11, interval: 0, rotate: 18 },
+      axisLine: { lineStyle: { color: '#d7dbe4' } }
+    },
+    yAxis: {
+      type: 'value',
+      name: '工时数',
+      nameTextStyle: { color: '#8d97a8', fontSize: 11 },
+      axisLabel: { color: '#8d97a8' },
+      splitLine: { lineStyle: { color: '#eef1f7' } }
+    },
+    series: [{
+      type: 'bar',
+      data: workHourData.value.map((i) => i.value),
+      itemStyle: { color: '#2f8cff' },
+      barWidth: 30,
+      label: { show: true, position: 'top', color: '#5f6f89', fontSize: 11 }
+    }]
+  })
   createChart(pieExpenseRef, { tooltip: { trigger: 'item' }, color: ['#3a9ad9', '#45bad7', '#5ccccf', '#90d3aa', '#f2d766', '#f29b77', '#ef6e91', '#d368ba', '#cf84c1', '#8f8cd8'], series: [{ type: 'pie', radius: '66%', center: ['50%', '56%'], label: { color: '#9aa5bb', fontSize: 11, formatter: (params) => `${params.name}\n(0%)` }, labelLine: { length: 10, length2: 8 }, data: expenseData }] })
 }
 

@@ -9,6 +9,8 @@ import ProjectListPage from '../modules/project/pages/ListPage.vue'
 import ProjectDetailPage from '../modules/project/pages/DetailPage.vue'
 import ProcessListPage from '../modules/process/pages/ListPage.vue'
 import ProcessDetailPage from '../modules/process/pages/DetailPage.vue'
+import FlowListPage from '../modules/flow/pages/ListPage.vue'
+import FlowDetailPage from '../modules/flow/pages/DetailPage.vue'
 import ExpenseListPage from '../modules/expense/pages/ListPage.vue'
 import ExpenseDetailPage from '../modules/expense/pages/DetailPage.vue'
 import MaterialListPage from '../modules/material/pages/ListPage.vue'
@@ -17,6 +19,10 @@ import SummaryListPage from '../modules/summary/pages/ListPage.vue'
 import SummaryDetailPage from '../modules/summary/pages/DetailPage.vue'
 import StatementsListPage from '../modules/statements/pages/ListPage.vue'
 import StatementsDetailPage from '../modules/statements/pages/DetailPage.vue'
+import TaskListPage from '../modules/task/pages/ListPage.vue'
+import TaskDetailPage from '../modules/task/pages/DetailPage.vue'
+import SystemListPage from '../modules/system/pages/ListPage.vue'
+import SystemDetailPage from '../modules/system/pages/DetailPage.vue'
 
 const companyModules = [
   { path: 'company/basic-info', title: '企业基本信息', key: 'basic-info' },
@@ -74,6 +80,17 @@ const processModules = [
 const processRoutes = processModules.flatMap((m) => [
   { path: m.path, component: ProcessListPage, meta: { breadcrumb: `研发过程 / ${m.title}`, moduleKey: m.key, listPath: `/${m.path}` } },
   { path: `${m.path}/detail/:id`, component: ProcessDetailPage, meta: { breadcrumb: `研发过程 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
+])
+
+const flowModules = [
+  { path: 'flowable/model/modelDesigner', title: '流程模型', key: 'flow-process-model' },
+  { path: 'flowable/SysCustomForm/SysCustomFormList', title: '业务表单', key: 'flow-business-form' },
+  { path: 'flowable/task/record/index', title: '流程申请', key: 'flow-process-apply' }
+]
+
+const flowRoutes = flowModules.flatMap((m) => [
+  { path: m.path, component: FlowListPage, meta: { breadcrumb: `流程管理 / ${m.title}`, moduleKey: m.key, listPath: `/${m.path}` } },
+  { path: `${m.path}/detail/:id`, component: FlowDetailPage, meta: { breadcrumb: `流程管理 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
 ])
 
 const expenseModules = [
@@ -137,6 +154,68 @@ const statementRoutes = statementModules.flatMap((m) => [
   { path: `${m.path}/detail/:id`, component: StatementsDetailPage, meta: { breadcrumb: `报表生成及查询 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
 ])
 
+const taskModules = [
+  { path: 'flowable/task/allprocess/index', title: '所有任务', key: 'task-allprocess' },
+  { path: 'flowable/task/myprocess/index', title: '我的任务', key: 'task-myprocess' },
+  { path: 'flowable/task/todo/index', title: '待办任务', key: 'task-todo' },
+  { path: 'flowable/task/finished/index', title: '已办任务', key: 'task-finished' },
+  { path: 'flowable/FlowCc/FowCcList', title: '抄送我的', key: 'task-flow-cc' },
+  { path: 'flowable/MyCc/MyCcList', title: '我的抄送', key: 'task-my-cc' }
+]
+
+const taskRoutes = taskModules.flatMap((m) => [
+  { path: m.path, component: TaskListPage, meta: { breadcrumb: `任务管理 / ${m.title}`, moduleKey: m.key, listPath: `/${m.path}` } },
+  { path: `${m.path}/detail/:id`, component: TaskDetailPage, meta: { breadcrumb: `任务管理 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
+])
+
+const systemModules = [
+  { path: 'system/depart', title: '部门管理', key: 'system-depart' },
+  { path: 'system/position', title: '职务管理', key: 'system-position' }
+]
+
+const systemRoutes = systemModules.flatMap((m) => [
+  { path: m.path, component: SystemListPage, meta: { breadcrumb: `系统管理 / ${m.title}`, moduleKey: m.key, listPath: `/${m.path}` } },
+  { path: `${m.path}/detail/:id`, component: SystemDetailPage, meta: { breadcrumb: `系统管理 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
+])
+
+const configModules = [
+  {
+    path: 'compliance/config/cmcfelectricitypriceconfig/cmcfElectricityPriceConfigList',
+    title: '电费归集模式配置',
+    key: 'config-electricity-price-mode'
+  },
+  {
+    path: 'compliance/config/cmcfprojectstageconfig/cmcfProjectStageConfigList',
+    title: '项目阶段配置',
+    key: 'config-project-stage'
+  },
+  {
+    path: 'compliance/config/cmcfprojectcollectionconfig/cmcfProjectCollectionConfigList',
+    title: '项目归集配置',
+    key: 'config-project-collection'
+  },
+  {
+    path: 'compliance/config/cmcfexpenseallocationconfig/cmcfExpenseAllocationConfigList',
+    title: '支出分配配置',
+    key: 'config-expense-allocation'
+  },
+  {
+    path: 'compliance/config/cmcfworkinghoursinputconfig/cmcfWorkingHoursInputConfigList',
+    title: '工时录入配置',
+    key: 'config-working-hours-input'
+  },
+  {
+    path: 'compliance/config/cmcfworkflowconfig/cmcfWorkFlowConfigList',
+    title: '流程配置',
+    key: 'config-workflow'
+  }
+]
+
+const configRoutes = configModules.flatMap((m) => [
+  { path: m.path, component: ProjectListPage, meta: { breadcrumb: `配置中心 / ${m.title}`, moduleKey: m.key, listPath: `/${m.path}` } },
+  { path: `${m.path}/detail/:id`, component: ProjectDetailPage, meta: { breadcrumb: `配置中心 / ${m.title} / 详情`, moduleKey: m.key, listPath: `/${m.path}` } }
+])
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -150,10 +229,14 @@ const router = createRouter({
         ...companyRoutes,
         ...projectRoutes,
         ...processRoutes,
+        ...flowRoutes,
         ...expenseRoutes,
         ...materialRoutes,
         ...summaryRoutes,
-        ...statementRoutes
+        ...statementRoutes,
+        ...taskRoutes,
+        ...systemRoutes,
+        ...configRoutes
       ]
     }
   ]
