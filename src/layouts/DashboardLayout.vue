@@ -371,7 +371,7 @@ const activeMenu = computed(() => {
   return p
 })
 
-const expandedKeys = ref(['company', 'project', 'process', 'expense', 'material', 'allocation', 'report', 'flow', 'task', 'system', 'config'])
+const expandedKeys = ref([])
 const siderCollapsed = ref(false)
 const breadcrumbLabel = computed(() => route.meta?.breadcrumb || '首页')
 

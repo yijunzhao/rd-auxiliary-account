@@ -12,6 +12,7 @@
 - `summary/`：支出分配
 - `statements/`：报表生成及查询
 - `task/`：任务管理
+- `system/`：系统管理
 
 约定：
 

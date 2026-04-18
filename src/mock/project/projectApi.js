@@ -55,7 +55,9 @@ const MODULE_MODAL = {
   'config-project-collection': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
   'config-expense-allocation': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
   'config-working-hours-input': { ...DEFAULT_MODAL, width: 920, columns: 2, okText: '保存' },
-  'config-workflow': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' }
+  'config-workflow': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'system-depart': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
+  'system-position': { ...DEFAULT_MODAL, width: 920, columns: 2, okText: '保存' }
 }
 
 const MODULES = {
@@ -730,6 +732,98 @@ const TASK_MODULE_SPECS = [
   { key: 'task-my-cc', title: '我的抄送', prefix: 'TMC' }
 ]
 
+const SYSTEM_MODULE_SPECS = [
+  {
+    key: 'system-depart',
+    title: '部门管理',
+    prefix: 'SDP',
+    columns: [
+      { title: '部门编码', key: 'departCode', sortable: true, width: 150 },
+      { title: '部门名称', key: 'departName', width: 170 },
+      { title: '上级部门', key: 'parentDepart', width: 150 },
+      { title: '负责人', key: 'manager', width: 120 },
+      { title: '联系电话', key: 'phone', width: 140 },
+      { title: '在编人数', key: 'memberCount', sortable: true, width: 100 },
+      { title: '备注', key: 'remark', width: 220 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'departCode', label: '部门编码', type: 'input', match: 'fuzzy', placeholder: '请输入部门编码' },
+      { key: 'departName', label: '部门名称', type: 'input', match: 'fuzzy', placeholder: '请输入部门名称' },
+      { key: 'manager', label: '负责人', type: 'input', match: 'fuzzy', placeholder: '请输入负责人' },
+      { key: 'status', label: '状态', type: 'select', match: 'exact', options: STATUS_OPTIONS }
+    ],
+    formSchema: [
+      { key: 'departCode', label: '部门编码', type: 'input', required: true, requiredMessage: '请输入部门编码', min: 2, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '部门编码仅支持大写字母、数字、短横线' },
+      { key: 'departName', label: '部门名称', type: 'input', required: true, requiredMessage: '请输入部门名称', min: 2, max: 60 },
+      { key: 'parentDepart', label: '上级部门', type: 'input', required: true, requiredMessage: '请输入上级部门', min: 2, max: 60 },
+      { key: 'manager', label: '负责人', type: 'input', required: true, requiredMessage: '请输入负责人', min: 2, max: 30 },
+      { key: 'phone', label: '联系电话', type: 'input', required: true, requiredMessage: '请输入联系电话', pattern: '^1\\d{10}$', patternMessage: '请输入11位手机号' },
+      { key: 'memberCount', label: '在编人数', type: 'number', required: true, requiredMessage: '请输入在编人数', minValue: 1, maxValue: 9999 },
+      { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'SDP001',
+      departCode: 'RD-ORG-001',
+      departName: '研发管理部',
+      parentDepart: '总部',
+      manager: '易君召',
+      phone: '13795362420',
+      memberCount: 26,
+      remark: '负责研发项目统筹、预算与过程管理',
+      status: '启用',
+      updatedAt: '2026-04-18'
+    }
+  },
+  {
+    key: 'system-position',
+    title: '职务管理',
+    prefix: 'SPM',
+    columns: [
+      { title: '职务编码', key: 'positionCode', sortable: true, width: 150 },
+      { title: '职务名称', key: 'positionName', width: 170 },
+      { title: '所属部门', key: 'departName', width: 170 },
+      { title: '职级', key: 'rankLevel', width: 120 },
+      { title: '编制数', key: 'quota', sortable: true, width: 100 },
+      { title: '负责人', key: 'owner', width: 120 },
+      { title: '流程状态', key: 'flowStatus', width: 120 },
+      { title: '备注', key: 'remark', width: 220 },
+      { title: '更新日期', key: 'updatedAt', sortable: true, width: 120 }
+    ],
+    querySchema: [
+      { key: 'positionCode', label: '职务编码', type: 'input', match: 'fuzzy', placeholder: '请输入职务编码' },
+      { key: 'positionName', label: '职务名称', type: 'input', match: 'fuzzy', placeholder: '请输入职务名称' },
+      { key: 'departName', label: '所属部门', type: 'input', match: 'fuzzy', placeholder: '请输入所属部门' },
+      { key: 'flowStatus', label: '流程状态', type: 'select', match: 'exact', options: FLOW_OPTIONS }
+    ],
+    formSchema: [
+      { key: 'positionCode', label: '职务编码', type: 'input', required: true, requiredMessage: '请输入职务编码', min: 2, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '职务编码仅支持大写字母、数字、短横线' },
+      { key: 'positionName', label: '职务名称', type: 'input', required: true, requiredMessage: '请输入职务名称', min: 2, max: 60 },
+      { key: 'departName', label: '所属部门', type: 'input', required: true, requiredMessage: '请输入所属部门', min: 2, max: 60 },
+      { key: 'rankLevel', label: '职级', type: 'select', options: ['专员', '主管', '经理', '总监'], required: true, requiredMessage: '请选择职级' },
+      { key: 'quota', label: '编制数', type: 'number', required: true, requiredMessage: '请输入编制数', minValue: 1, maxValue: 9999 },
+      { key: 'owner', label: '负责人', type: 'input', required: true, requiredMessage: '请输入负责人', min: 2, max: 30 },
+      { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
+      { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
+    ],
+    row: {
+      id: 'SPM001',
+      positionCode: 'POST-RD-001',
+      positionName: '研发项目经理',
+      departName: '研发管理部',
+      rankLevel: '经理',
+      quota: 6,
+      owner: '易君召',
+      flowStatus: '审批通过',
+      remark: '负责项目计划、里程碑管理及跨部门协作',
+      status: '启用',
+      updatedAt: '2026-04-18'
+    }
+  }
+]
+
 const CONFIG_MODULE_SPECS = [
   {
     key: 'config-electricity-price-mode',
@@ -1317,6 +1411,10 @@ function createConfigModule(spec) {
     rows: [{ ...spec.row }]
   }
 }
+
+SYSTEM_MODULE_SPECS.forEach((spec) => {
+  MODULES[spec.key] = createConfigModule(spec)
+})
 
 CONFIG_MODULE_SPECS.forEach((spec) => {
   MODULES[spec.key] = createConfigModule(spec)
