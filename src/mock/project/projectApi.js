@@ -737,6 +737,7 @@ const SYSTEM_MODULE_SPECS = [
     key: 'system-depart',
     title: '部门管理',
     prefix: 'SDP',
+    noAutoExpand: true,
     columns: [
       { title: '部门编码', key: 'departCode', sortable: true, width: 150 },
       { title: '部门名称', key: 'departName', width: 170 },
@@ -763,23 +764,26 @@ const SYSTEM_MODULE_SPECS = [
       { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'SDP001',
-      departCode: 'RD-ORG-001',
-      departName: '研发管理部',
-      parentDepart: '总部',
-      manager: '易君召',
-      phone: '13795362420',
-      memberCount: 26,
-      remark: '负责研发项目统筹、预算与过程管理',
-      status: '启用',
-      updatedAt: '2026-04-18'
-    }
+    rows: [
+      { id: 'SDP001', departCode: 'HQ-000', departName: '总部', parentDepart: '集团', manager: '江惠云', phone: '13810881201', memberCount: 18, remark: '公司经营与管理决策中心', status: '启用', updatedAt: '2026-04-18' },
+      { id: 'SDP002', departCode: 'FIN-001', departName: '财务管理部', parentDepart: '总部', manager: '王磊', phone: '13910881202', memberCount: 14, remark: '负责总账、税务申报与预算控制', status: '启用', updatedAt: '2026-04-17' },
+      { id: 'SDP003', departCode: 'HR-001', departName: '人力资源部', parentDepart: '总部', manager: '李娜', phone: '13710881203', memberCount: 9, remark: '负责招聘、绩效与组织发展', status: '启用', updatedAt: '2026-04-16' },
+      { id: 'SDP004', departCode: 'RD-001', departName: '研发管理部', parentDepart: '总部', manager: '易君召', phone: '13795362420', memberCount: 26, remark: '负责研发项目统筹、预算与过程管理', status: '启用', updatedAt: '2026-04-18' },
+      { id: 'SDP005', departCode: 'RD-ALG', departName: '算法研发组', parentDepart: '研发管理部', manager: '周强', phone: '13610881205', memberCount: 11, remark: '负责控制算法与优化策略开发', status: '启用', updatedAt: '2026-04-12' },
+      { id: 'SDP006', departCode: 'RD-HW', departName: '硬件研发组', parentDepart: '研发管理部', manager: '陈杰', phone: '13510881206', memberCount: 13, remark: '负责硬件方案设计与板级调试', status: '启用', updatedAt: '2026-04-11' },
+      { id: 'SDP007', departCode: 'RD-SW', departName: '软件研发组', parentDepart: '研发管理部', manager: '刘洋', phone: '13310881207', memberCount: 17, remark: '负责嵌入式软件与平台应用开发', status: '启用', updatedAt: '2026-04-14' },
+      { id: 'SDP008', departCode: 'QA-001', departName: '质量保障部', parentDepart: '总部', manager: '赵婷', phone: '13210881208', memberCount: 10, remark: '负责测试体系、质量审计与度量', status: '启用', updatedAt: '2026-04-13' },
+      { id: 'SDP009', departCode: 'PMO-001', departName: '项目管理办公室', parentDepart: '总部', manager: '孙浩', phone: '13110881209', memberCount: 7, remark: '负责里程碑、变更与风险治理', status: '启用', updatedAt: '2026-04-15' },
+      { id: 'SDP010', departCode: 'PROC-001', departName: '采购供应部', parentDepart: '总部', manager: '吴迪', phone: '13010881210', memberCount: 12, remark: '负责供应商管理与关键物料采购', status: '启用', updatedAt: '2026-04-10' },
+      { id: 'SDP011', departCode: 'IT-001', departName: '信息化部', parentDepart: '总部', manager: '郑楠', phone: '18910881211', memberCount: 8, remark: '负责系统运维、权限与数据平台', status: '草稿', updatedAt: '2026-04-09' },
+      { id: 'SDP012', departCode: 'OPS-001', departName: '运营支持部', parentDepart: '总部', manager: '冯倩', phone: '18810881212', memberCount: 6, remark: '原运营职能待并入项目管理办公室', status: '停用', updatedAt: '2026-04-08' }
+    ]
   },
   {
     key: 'system-position',
     title: '职务管理',
     prefix: 'SPM',
+    noAutoExpand: true,
     columns: [
       { title: '职务编码', key: 'positionCode', sortable: true, width: 150 },
       { title: '职务名称', key: 'positionName', width: 170 },
@@ -808,19 +812,18 @@ const SYSTEM_MODULE_SPECS = [
       { key: 'remark', label: '备注', type: 'textarea', required: false, max: 300 },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'SPM001',
-      positionCode: 'POST-RD-001',
-      positionName: '研发项目经理',
-      departName: '研发管理部',
-      rankLevel: '经理',
-      quota: 6,
-      owner: '易君召',
-      flowStatus: '审批通过',
-      remark: '负责项目计划、里程碑管理及跨部门协作',
-      status: '启用',
-      updatedAt: '2026-04-18'
-    }
+    rows: [
+      { id: 'SPM001', positionCode: 'POST-RD-001', positionName: '研发项目经理', departName: '研发管理部', rankLevel: '经理', quota: 6, owner: '易君召', flowStatus: '审批通过', remark: '负责项目计划、里程碑管理及跨部门协作', status: '启用', updatedAt: '2026-04-18' },
+      { id: 'SPM002', positionCode: 'POST-RD-002', positionName: '算法工程师', departName: '算法研发组', rankLevel: '主管', quota: 8, owner: '周强', flowStatus: '审批通过', remark: '负责控制算法、参数标定与模型验证', status: '启用', updatedAt: '2026-04-16' },
+      { id: 'SPM003', positionCode: 'POST-RD-003', positionName: '嵌入式开发工程师', departName: '软件研发组', rankLevel: '专员', quota: 12, owner: '刘洋', flowStatus: '审批通过', remark: '负责底层驱动、通信协议与设备联调', status: '启用', updatedAt: '2026-04-15' },
+      { id: 'SPM004', positionCode: 'POST-RD-004', positionName: '硬件设计工程师', departName: '硬件研发组', rankLevel: '专员', quota: 9, owner: '陈杰', flowStatus: '审批通过', remark: '负责原理图、PCB与EMC整改设计', status: '启用', updatedAt: '2026-04-14' },
+      { id: 'SPM005', positionCode: 'POST-QA-001', positionName: '测试经理', departName: '质量保障部', rankLevel: '经理', quota: 2, owner: '赵婷', flowStatus: '审批中', remark: '负责测试策略、自动化建设与质量门禁', status: '启用', updatedAt: '2026-04-13' },
+      { id: 'SPM006', positionCode: 'POST-QA-002', positionName: '系统测试工程师', departName: '质量保障部', rankLevel: '主管', quota: 6, owner: '赵婷', flowStatus: '审批通过', remark: '负责系统联调、回归测试与缺陷闭环', status: '启用', updatedAt: '2026-04-12' },
+      { id: 'SPM007', positionCode: 'POST-FIN-001', positionName: '税务会计', departName: '财务管理部', rankLevel: '主管', quota: 3, owner: '王磊', flowStatus: '审批通过', remark: '负责研发费用归集与加计扣除资料', status: '启用', updatedAt: '2026-04-11' },
+      { id: 'SPM008', positionCode: 'POST-PMO-001', positionName: 'PMO专员', departName: '项目管理办公室', rankLevel: '专员', quota: 4, owner: '孙浩', flowStatus: '审批驳回', remark: '岗位说明书需补充跨部门协调职责', status: '草稿', updatedAt: '2026-04-10' },
+      { id: 'SPM009', positionCode: 'POST-IT-001', positionName: '系统管理员', departName: '信息化部', rankLevel: '主管', quota: 2, owner: '郑楠', flowStatus: '草稿', remark: '负责权限体系、审计日志与备份策略', status: '草稿', updatedAt: '2026-04-09' },
+      { id: 'SPM010', positionCode: 'POST-OPS-001', positionName: '运营支持专员', departName: '运营支持部', rankLevel: '专员', quota: 2, owner: '冯倩', flowStatus: '审批通过', remark: '组织调整后岗位计划转入PMO', status: '停用', updatedAt: '2026-04-08' }
+    ]
   }
 ]
 
@@ -859,20 +862,64 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CEM001',
-      modeCode: 'ELEC-MODE-001',
-      modeName: '研发线体电费归集模式',
-      voltageLevel: '中压',
-      collectionRule: '按工时比例归集',
-      unitPrice: 0.86,
-      taxRate: 13,
-      effectiveDate: '2026-01-01',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CEM001',
+        modeCode: 'ELEC-RD-HV-2026A',
+        modeName: '研发中心高压专线计量归集',
+        voltageLevel: '高压',
+        collectionRule: '按项目电表归集',
+        unitPrice: 0.742,
+        taxRate: 13,
+        effectiveDate: '2026-01-01',
+        owner: '王磊',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-16'
+      },
+      {
+        id: 'CEM002',
+        modeCode: 'ELEC-LAB-MV-2025B',
+        modeName: '测试实验楼中压分段归集',
+        voltageLevel: '中压',
+        collectionRule: '按面积比例归集',
+        unitPrice: 0.868,
+        taxRate: 13,
+        effectiveDate: '2025-10-01',
+        owner: '赵婷',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-13'
+      },
+      {
+        id: 'CEM003',
+        modeCode: 'ELEC-PILOT-LV-2026C',
+        modeName: '中试线低压工时归集',
+        voltageLevel: '低压',
+        collectionRule: '按工时比例归集',
+        unitPrice: 0.923,
+        taxRate: 13,
+        effectiveDate: '2026-03-01',
+        owner: '冯倩',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CEM004',
+        modeCode: 'ELEC-HQ-MV-2024X',
+        modeName: '总部办公区历史归集模式',
+        voltageLevel: '中压',
+        collectionRule: '按面积比例归集',
+        unitPrice: 0.815,
+        taxRate: 13,
+        effectiveDate: '2024-01-01',
+        owner: '周强',
+        flowStatus: '审批通过',
+        status: '停用',
+        updatedAt: '2026-02-10'
+      }
+    ]
   },
   {
     key: 'config-project-stage',
@@ -905,19 +952,60 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CPS001',
-      stageCode: 'STAGE-001',
-      stageName: '方案设计',
-      stageType: '研发',
-      startNode: '需求评审',
-      endNode: '方案评审',
-      requiredPass: '是',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CPS001',
+        stageCode: 'STG-INIT-001',
+        stageName: '立项评估',
+        stageType: '立项',
+        startNode: '需求提交',
+        endNode: '立项决议',
+        requiredPass: '是',
+        owner: '孙浩',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-12'
+      },
+      {
+        id: 'CPS002',
+        stageCode: 'STG-RD-010',
+        stageName: '方案设计与评审',
+        stageType: '研发',
+        startNode: '技术预研',
+        endNode: '方案评审',
+        requiredPass: '是',
+        owner: '易君召',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-15'
+      },
+      {
+        id: 'CPS003',
+        stageCode: 'STG-QA-020',
+        stageName: '系统联调测试',
+        stageType: '测试',
+        startNode: '联调计划确认',
+        endNode: '测试报告签发',
+        requiredPass: '是',
+        owner: '赵婷',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CPS004',
+        stageCode: 'STG-ACC-030',
+        stageName: '验收归档',
+        stageType: '验收',
+        startNode: '验收申请',
+        endNode: '资料归档',
+        requiredPass: '否',
+        owner: '王磊',
+        flowStatus: '草稿',
+        status: '停用',
+        updatedAt: '2026-03-06'
+      }
+    ]
   },
   {
     key: 'config-project-collection',
@@ -952,20 +1040,64 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CPC001',
-      collectionCode: 'COLL-001',
-      collectionName: '研发材料费归集',
-      expenseCategory: '材料',
-      allocationRule: '按项目工时',
-      accountCode: '6602-04',
-      capitalized: '否',
-      effectiveDate: '2026-01-01',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CPC001',
+        collectionCode: 'COLL-MAT-2026-01',
+        collectionName: '研发样机材料归集',
+        expenseCategory: '材料',
+        allocationRule: '按项目工时',
+        accountCode: '6602-04',
+        capitalized: '否',
+        effectiveDate: '2026-01-01',
+        owner: '陈杰',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-10'
+      },
+      {
+        id: 'CPC002',
+        collectionCode: 'COLL-LAB-2026-02',
+        collectionName: '研发人员人工费用归集',
+        expenseCategory: '人工',
+        allocationRule: '按项目人数',
+        accountCode: '6602-01',
+        capitalized: '是',
+        effectiveDate: '2026-02-01',
+        owner: '王磊',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-14'
+      },
+      {
+        id: 'CPC003',
+        collectionCode: 'COLL-DEP-2025-08',
+        collectionName: '研发设备折旧归集',
+        expenseCategory: '折旧',
+        allocationRule: '按预算比例',
+        accountCode: '6602-03',
+        capitalized: '否',
+        effectiveDate: '2025-08-01',
+        owner: '郑楠',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CPC004',
+        collectionCode: 'COLL-DES-2024-11',
+        collectionName: '外协设计服务归集',
+        expenseCategory: '设计',
+        allocationRule: '按项目工时',
+        accountCode: '6602-06',
+        capitalized: '是',
+        effectiveDate: '2024-11-01',
+        owner: '周强',
+        flowStatus: '审批驳回',
+        status: '停用',
+        updatedAt: '2026-01-21'
+      }
+    ]
   },
   {
     key: 'config-expense-allocation',
@@ -1000,20 +1132,64 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CEA001',
-      allocationCode: 'ALLOC-001',
-      allocationName: '研发支出月度分配规则',
-      dimension: '项目',
-      ruleName: '按工时占比',
-      roundingPolicy: '保留2位小数',
-      manualAdjust: '是',
-      effectiveDate: '2026-01-01',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CEA001',
+        allocationCode: 'ALLOC-PJT-2026-01',
+        allocationName: '项目维度月度分配',
+        dimension: '项目',
+        ruleName: '按工时占比',
+        roundingPolicy: '保留2位小数',
+        manualAdjust: '是',
+        effectiveDate: '2026-01-01',
+        owner: '易君召',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-17'
+      },
+      {
+        id: 'CEA002',
+        allocationCode: 'ALLOC-DEPT-2025-12',
+        allocationName: '部门维度季度分配',
+        dimension: '部门',
+        ruleName: '按预算占比',
+        roundingPolicy: '保留4位小数',
+        manualAdjust: '否',
+        effectiveDate: '2025-12-01',
+        owner: '王磊',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-09'
+      },
+      {
+        id: 'CEA003',
+        allocationCode: 'ALLOC-EXP-2026-03',
+        allocationName: '费用类型动态分配',
+        dimension: '费用类型',
+        ruleName: '按实际发生额',
+        roundingPolicy: '保留2位小数',
+        manualAdjust: '是',
+        effectiveDate: '2026-03-01',
+        owner: '赵婷',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CEA004',
+        allocationCode: 'ALLOC-PJT-2024-06',
+        allocationName: '历史项目结转分配规则',
+        dimension: '项目',
+        ruleName: '按预算占比',
+        roundingPolicy: '保留2位小数',
+        manualAdjust: '否',
+        effectiveDate: '2024-06-01',
+        owner: '孙浩',
+        flowStatus: '审批通过',
+        status: '停用',
+        updatedAt: '2025-12-30'
+      }
+    ]
   },
   {
     key: 'config-working-hours-input',
@@ -1048,20 +1224,64 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CWH001',
-      configCode: 'WH-INPUT-001',
-      configName: '研发人员月度工时填报策略',
-      personnelType: '研发人员',
-      minHours: 0,
-      maxHours: 186,
-      deadlineDay: 5,
-      approvalRequired: '是',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CWH001',
+        configCode: 'WH-RD-2026-01',
+        configName: '研发人员月度工时填报',
+        personnelType: '研发人员',
+        minHours: 120,
+        maxHours: 220,
+        deadlineDay: 3,
+        approvalRequired: '是',
+        owner: '易君召',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-16'
+      },
+      {
+        id: 'CWH002',
+        configCode: 'WH-QA-2026-01',
+        configName: '测试人员联调阶段工时策略',
+        personnelType: '测试人员',
+        minHours: 100,
+        maxHours: 210,
+        deadlineDay: 4,
+        approvalRequired: '是',
+        owner: '赵婷',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-12'
+      },
+      {
+        id: 'CWH003',
+        configCode: 'WH-MGMT-2025-11',
+        configName: '管理人员工时采集规则',
+        personnelType: '管理人员',
+        minHours: 40,
+        maxHours: 120,
+        deadlineDay: 6,
+        approvalRequired: '否',
+        owner: '孙浩',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CWH004',
+        configCode: 'WH-RD-2024-05',
+        configName: '早期项目宽松填报模板',
+        personnelType: '研发人员',
+        minHours: 0,
+        maxHours: 260,
+        deadlineDay: 8,
+        approvalRequired: '否',
+        owner: '郑楠',
+        flowStatus: '审批通过',
+        status: '停用',
+        updatedAt: '2025-08-20'
+      }
+    ]
   },
   {
     key: 'config-workflow',
@@ -1096,20 +1316,64 @@ const CONFIG_MODULE_SPECS = [
       { key: 'flowStatus', label: '流程状态', type: 'select', options: FLOW_OPTIONS, required: true, requiredMessage: '请选择流程状态' },
       { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true, requiredMessage: '请选择状态' }
     ],
-    row: {
-      id: 'CWF001',
-      workflowCode: 'WF-CONFIG-001',
-      workflowName: '研发费用归集审批流程',
-      bizType: '费用归集',
-      startRole: '项目会计',
-      approveRole: '财务经理',
-      timeoutHours: 48,
-      versionNo: 'v1.0.0',
-      owner: '易君召',
-      flowStatus: '审批通过',
-      status: '启用',
-      updatedAt: '2026-04-17'
-    }
+    rows: [
+      {
+        id: 'CWF001',
+        workflowCode: 'WF-EXP-2026-A1',
+        workflowName: '研发费用归集审批流程',
+        bizType: '费用归集',
+        startRole: '项目会计',
+        approveRole: '财务经理',
+        timeoutHours: 48,
+        versionNo: 'v2.3.1',
+        owner: '王磊',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-17'
+      },
+      {
+        id: 'CWF002',
+        workflowCode: 'WF-HOUR-2026-B2',
+        workflowName: '工时填报月结审核流程',
+        bizType: '工时填报',
+        startRole: '研发工程师',
+        approveRole: '部门经理',
+        timeoutHours: 24,
+        versionNo: 'v1.9.0',
+        owner: '赵婷',
+        flowStatus: '审批通过',
+        status: '启用',
+        updatedAt: '2026-04-11'
+      },
+      {
+        id: 'CWF003',
+        workflowCode: 'WF-PRJ-2026-C1',
+        workflowName: '项目阶段变更审批流程',
+        bizType: '项目管理',
+        startRole: '项目经理',
+        approveRole: 'PMO主管',
+        timeoutHours: 72,
+        versionNo: 'v0.9.5',
+        owner: '孙浩',
+        flowStatus: '审批中',
+        status: '草稿',
+        updatedAt: '2026-04-18'
+      },
+      {
+        id: 'CWF004',
+        workflowCode: 'WF-RPT-2025-D4',
+        workflowName: '加计扣除报表发布流程',
+        bizType: '报表发布',
+        startRole: '税务会计',
+        approveRole: '财务总监',
+        timeoutHours: 36,
+        versionNo: 'v1.2.4',
+        owner: '周强',
+        flowStatus: '审批通过',
+        status: '停用',
+        updatedAt: '2025-12-28'
+      }
+    ]
   }
 ]
 
@@ -1408,7 +1672,8 @@ function createConfigModule(spec) {
     columns: spec.columns,
     querySchema: spec.querySchema,
     formSchema: spec.formSchema,
-    rows: [{ ...spec.row }]
+    rows: Array.isArray(spec.rows) && spec.rows.length ? spec.rows.map((row) => ({ ...row })) : [{ ...spec.row }],
+    noAutoExpand: !!spec.noAutoExpand
   }
 }
 
@@ -1527,6 +1792,7 @@ function enrichProjectRow(baseRow, seq) {
 function expandProjectModuleRows(modules) {
   const entries = Object.entries(modules)
   entries.forEach(([moduleKey, moduleCfg], moduleIndex) => {
+    if (moduleCfg.noAutoExpand) return
     const baseRows = Array.isArray(moduleCfg.rows) ? moduleCfg.rows : []
     if (!baseRows.length) return
 

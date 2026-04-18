@@ -136,7 +136,8 @@ const menuOptions = [
       { key: '/compliance/expense/cmexentrustedresearch/cmexEntrustedResearchList', label: '委托研发费用', icon: renderIcon(LibraryOutline) },
       { key: '/compliance/expense/cmexoffsettingresearch/cmexOffsettingResearchList', label: '应冲减研发费用', icon: renderIcon(SwapHorizontalOutline) },
       { key: '/compliance/expense/cmexauditadjustments/cmexAuditAdjustmentsList', label: '审计调整研发费用', icon: renderIcon(CheckboxOutline) },
-      { key: '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList', label: '会计凭证导入', icon: renderIcon(DocumentOutline) }
+      { key: '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList', label: '会计凭证导入', icon: renderIcon(DocumentOutline) },
+      { key: '/expense/developAndExpensesFile', label: '研发材料报废单及盘点表', icon: renderIcon(ClipboardOutline) }
     ]
   },
   {
@@ -230,6 +231,12 @@ const menuOptions = [
     ]
   }
 ]
+
+const expandableMenuKeys = new Set(
+  menuOptions
+    .filter((item) => Array.isArray(item?.children) && item.children.length > 0)
+    .map((item) => item.key)
+)
 
 const companyBaseKeys = [
   '/company/basic-info',
@@ -381,6 +388,10 @@ function handleMenuSelect(key) {
   }
 }
 
+function handleExpandedKeysUpdate(keys) {
+  expandedKeys.value = (keys || []).filter((key) => expandableMenuKeys.has(key))
+}
+
 function logout() {
   router.push('/login')
 }
@@ -409,6 +420,7 @@ function toggleSider() {
           :options="menuOptions"
           class="sider-menu"
           @update:value="handleMenuSelect"
+          @update:expanded-keys="handleExpandedKeysUpdate"
         />
       </n-scrollbar>
     </n-layout-sider>
