@@ -421,7 +421,7 @@ const MODULES = {
         sysDepart: '研发中心',
         employeeAccount: 'EMP-1001',
         employeeName: '易君召',
-        phone: '13795362420',
+        phone: '13688889999',
         managerSign: '是',
         identityNumber: '320102199103163258',
         gender: '男',

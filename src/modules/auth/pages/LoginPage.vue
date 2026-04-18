@@ -6,7 +6,7 @@ import logoTax from '../../../assets/logo-tax.png'
 import loginBoxBg from '../../../assets/login-box-bg.svg'
 
 const router = useRouter()
-const account = ref('13795362420')
+const account = ref('13688889999')
 const password = ref('abcD123$')
 const captcha = ref('')
 const rememberMe = ref(true)
