@@ -1,38 +1,34 @@
 # rd-auxiliary-account
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite implementation of an RD expense compliance management front-end.
 
-## Recommended IDE Setup
+研发费用合规智能管理系统前端，基于 Vue 3 + Vite。
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Docs / 文档
 
-## Recommended Browser Setup
+- English: [README.en.md](./README.en.md)
+- 中文: [README.zh-CN.md](./README.zh-CN.md)
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Quick Snapshot / 项目快照
 
-## Customize configuration
+- Tech stack / 技术栈: Vue 3, Vue Router 4, Naive UI, ECharts, XLSX, Vite 8
+- Runtime / 运行环境: Node `^20.19.0 || >=22.12.0`
+- Entry routes / 入口路由: `/login`, `/dashboard/analysis`
+- Data source / 数据来源: in-memory mock APIs under `src/mock/`
+- Feature modules / 功能模块:
+  - `company` (8)
+  - `project` (8)
+  - `process` (18)
+  - `expense` (12)
+  - `material` (10)
+  - `summary` (2)
+  - `statements` (5)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Commands / 常用命令
 
-## Project Setup
-
-```sh
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
 npm run build
+npm run preview
 ```
