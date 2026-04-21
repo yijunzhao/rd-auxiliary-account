@@ -19,6 +19,56 @@ const DEFAULT_MODAL = {
   okFirst: false
 }
 
+const DEFAULT_UI = {
+  showQuery: true,
+  showCreate: true,
+  showBatchDelete: true,
+  showImport: true,
+  showExport: true,
+  showDetailAction: true,
+  showEditAction: true,
+  showDeleteAction: true
+}
+
+const MODULE_UI = {
+  'project-info': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'project-suspend': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'project-collection-config': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'project-termination': { showQuery: false, showCreate: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'project-stage-change-apply': { showDetailAction: false, showEditAction: false, showDeleteAction: false, showImport: false, showExport: false },
+  'project-document': { showDetailAction: false, showEditAction: false, showImport: false },
+  'project-change': { showDetailAction: false, showEditAction: false, showDeleteAction: false, showImport: false, showExport: false },
+  'process-intangible-assets-working-hours': { showCreate: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'process-fixed-assets-working-hours': { showCreate: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'process-leased-assets-working-hours': { showCreate: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'summary-summary': { showCreate: false, showBatchDelete: false, showImport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'summary-book': { showCreate: false, showBatchDelete: false, showImport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'statements-research-expenses': { showCreate: false, showBatchDelete: false, showImport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'process-export': { showCreate: false, showBatchDelete: false, showImport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-personnellabor': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-depreciationandspread': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-entrusted-research': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-other-expense': { showDetailAction: true, showEditAction: true, showDeleteAction: true },
+  'expense-offsetting-research': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-directinvestment': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-intangible-assets-share': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'material-archive': { showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'flow-process-model': { showCreate: true, showDetailAction: false, showEditAction: false, showDeleteAction: false, showImport: false, showExport: false },
+  'task-allprocess': { showCreate: false, showBatchDelete: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'task-myprocess': { showCreate: false, showBatchDelete: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'task-todo': { showCreate: false, showBatchDelete: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'task-finished': { showCreate: false, showBatchDelete: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'expense-accounting-vouchers-import': { showCreate: true, showBatchDelete: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'system-depart': { showQuery: false, showImport: true, showExport: true, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'system-position': { showQuery: true, showImport: true, showExport: true, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-electricity-price-mode': { showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-project-stage': { showImport: true, showExport: true, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-project-collection': { showImport: true, showExport: true, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-expense-allocation': { showQuery: false, showCreate: false, showImport: true, showExport: true, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-working-hours-input': { showCreate: false, showImport: false, showExport: false, showDetailAction: false, showEditAction: false, showDeleteAction: false },
+  'config-workflow': { showImport: true, showExport: true }
+}
+
 const MODULE_MODAL = {
   'project-info': { ...DEFAULT_MODAL, width: 1180, columns: 2, okText: '保存' },
   'project-change': { ...DEFAULT_MODAL, width: 980, columns: 2, okText: '保存' },
@@ -1897,7 +1947,11 @@ export async function fetchProjectModuleMeta(moduleKey) {
     querySchema: cfg.querySchema,
     formSchema: cfg.formSchema,
     toolbar: cfg.toolbar || DEFAULT_TOOLBAR,
-    modal: MODULE_MODAL[moduleKey] || DEFAULT_MODAL
+    modal: MODULE_MODAL[moduleKey] || DEFAULT_MODAL,
+    ui: {
+      ...DEFAULT_UI,
+      ...(MODULE_UI[moduleKey] || {})
+    }
   })
 }
 

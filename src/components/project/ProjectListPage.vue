@@ -38,7 +38,24 @@ const page = ref(1)
 const pageSize = ref(8)
 const total = ref(0)
 const rows = ref([])
-const meta = ref({ title: '', columns: [], querySchema: [], formSchema: [], toolbar: {}, modal: {} })
+const meta = ref({
+  title: '',
+  columns: [],
+  querySchema: [],
+  formSchema: [],
+  toolbar: {},
+  modal: {},
+  ui: {
+    showQuery: true,
+    showCreate: true,
+    showBatchDelete: true,
+    showImport: true,
+    showExport: true,
+    showDetailAction: true,
+    showEditAction: true,
+    showDeleteAction: true
+  }
+})
 const query = ref({})
 const modalVisible = ref(false)
 const editingRow = ref(null)
@@ -46,6 +63,14 @@ const modalMode = ref('create')
 const selectedRowKeys = ref([])
 const sortState = ref({ sortKey: '', sortOrder: '' })
 const importInputRef = ref(null)
+
+const actionButtons = computed(() => {
+  const buttons = []
+  if (meta.value.ui.showDetailAction) buttons.push('detail')
+  if (meta.value.ui.showEditAction) buttons.push('edit')
+  if (meta.value.ui.showDeleteAction) buttons.push('delete')
+  return buttons
+})
 
 const tableColumns = computed(() => {
   const base = meta.value.columns.map((col) => ({
@@ -57,7 +82,7 @@ const tableColumns = computed(() => {
   }))
 
   return [
-    { type: 'selection', width: 44 },
+    ...(meta.value.ui.showBatchDelete ? [{ type: 'selection', width: 44 }] : []),
     ...base,
     {
       title: '状态',
@@ -65,30 +90,34 @@ const tableColumns = computed(() => {
       width: 96,
       render: (row) => h(NTag, { size: 'small', type: row.status === '启用' ? 'success' : row.status === '停用' ? 'error' : 'warning' }, { default: () => row.status || '-' })
     },
-    {
+    ...(actionButtons.value.length
+      ? [{
       title: '操作',
       key: 'actions',
       width: 250,
       render: (row) =>
         h(NSpace, { size: 6 }, {
           default: () => [
-            h(NButton, { text: true, type: 'primary', onClick: () => viewDetail(row) }, { default: () => '详情' }),
-            h(NButton, { text: true, onClick: () => editRow(row) }, { default: () => '编辑' }),
-            h(
-              NButton,
-              {
-                text: true,
-                type: 'error',
-                onClick: async () => {
-                  if (!window.confirm('确认删除该条记录吗？')) return
-                  await removeRow(row.id)
-                }
-              },
-              { default: () => '删除' }
-            )
+            ...(meta.value.ui.showDetailAction ? [h(NButton, { text: true, type: 'primary', onClick: () => viewDetail(row) }, { default: () => '详情' })] : []),
+            ...(meta.value.ui.showEditAction ? [h(NButton, { text: true, onClick: () => editRow(row) }, { default: () => '编辑' })] : []),
+            ...(meta.value.ui.showDeleteAction
+              ? [h(
+                  NButton,
+                  {
+                    text: true,
+                    type: 'error',
+                    onClick: async () => {
+                      if (!window.confirm('确认删除该条记录吗？')) return
+                      await removeRow(row.id)
+                    }
+                  },
+                  { default: () => '删除' }
+                )]
+              : [])
           ]
         })
-    }
+    }]
+      : [])
   ]
 })
 
@@ -139,6 +168,7 @@ async function resetQuery() {
 }
 
 function createRow() {
+  if (!meta.value.ui.showCreate) return
   modalMode.value = 'create'
   editingRow.value = null
   modalVisible.value = true
@@ -187,6 +217,7 @@ async function removeRow(id) {
 }
 
 async function batchDelete() {
+  if (!meta.value.ui.showBatchDelete) return
   if (!selectedRowKeys.value.length) return
   if (!window.confirm(`确认批量删除 ${selectedRowKeys.value.length} 条记录吗？`)) return
   submitting.value = true
@@ -203,6 +234,7 @@ async function batchDelete() {
 }
 
 async function handleExport() {
+  if (!meta.value.ui.showExport) return
   submitting.value = true
   try {
     const data = await exportProjectRecords({ moduleKey: props.moduleKey, filters: query.value })
@@ -228,6 +260,7 @@ async function handleExport() {
 }
 
 async function handleBatchExport() {
+  if (!meta.value.ui.showExport) return
   if (!selectedRowKeys.value.length) return
   submitting.value = true
   try {
@@ -258,10 +291,12 @@ async function handleBatchExport() {
 }
 
 function triggerImport() {
+  if (!meta.value.ui.showImport) return
   importInputRef.value?.click()
 }
 
 async function onImportFileChange(event) {
+  if (!meta.value.ui.showImport) return
   const file = event.target?.files?.[0]
   if (!file) return
 
@@ -336,7 +371,7 @@ useModuleListReload(
 </script>
 
 <template>
-  <n-card class="filter-card" :bordered="false">
+  <n-card v-if="meta.ui.showQuery && meta.querySchema.length" class="filter-card" :bordered="false">
     <n-form inline>
       <n-form-item v-for="field in meta.querySchema" :key="field.key" :label="field.label">
         <n-select
@@ -359,12 +394,21 @@ useModuleListReload(
   <n-card :title="meta.title" class="archive-card" :bordered="false">
     <template #header-extra>
       <n-space>
-        <n-button type="primary" size="small" @click="createRow">{{ meta.toolbar?.addLabel || '新增' }}</n-button>
-        <n-button size="small" type="error" ghost :disabled="!selectedRowKeys.length" @click="batchDelete">{{ meta.toolbar?.batchDeleteLabel || '批量删除' }}</n-button>
+        <n-button v-if="meta.ui.showCreate" type="primary" size="small" @click="createRow">{{ meta.toolbar?.addLabel || '新增' }}</n-button>
+        <n-button
+          v-if="meta.ui.showBatchDelete"
+          size="small"
+          type="error"
+          ghost
+          :disabled="!selectedRowKeys.length"
+          @click="batchDelete"
+        >
+          {{ meta.toolbar?.batchDeleteLabel || '批量删除' }}
+        </n-button>
         <n-button v-if="meta.toolbar?.batchExportLabel" size="small" :disabled="!selectedRowKeys.length" @click="handleBatchExport">{{ meta.toolbar.batchExportLabel }}</n-button>
-        <n-button v-if="meta.toolbar?.downloadTemplateLabel" size="small" @click="handleExport">{{ meta.toolbar.downloadTemplateLabel }}</n-button>
-        <n-button size="small" @click="triggerImport">{{ meta.toolbar?.importLabel || '导入' }}</n-button>
-        <n-button size="small" @click="handleExport">{{ meta.toolbar?.exportLabel || '导出' }}</n-button>
+        <n-button v-if="meta.ui.showExport && meta.toolbar?.downloadTemplateLabel" size="small" @click="handleExport">{{ meta.toolbar.downloadTemplateLabel }}</n-button>
+        <n-button v-if="meta.ui.showImport" size="small" @click="triggerImport">{{ meta.toolbar?.importLabel || '导入' }}</n-button>
+        <n-button v-if="meta.ui.showExport" size="small" @click="handleExport">{{ meta.toolbar?.exportLabel || '导出' }}</n-button>
       </n-space>
     </template>
 

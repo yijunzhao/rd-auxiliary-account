@@ -12,7 +12,7 @@ const MODULES = {
       showImport: false,
       showExport: false,
       showDetailAction: false,
-      showEditAction: true,
+      showEditAction: false,
       showDeleteAction: false
     },
     columns: [
@@ -201,6 +201,16 @@ const MODULES = {
   'leased-assets': {
     title: '经营租赁资产',
     prefix: 'LA',
+    ui: {
+      showQuery: true,
+      showCreate: true,
+      showBatchDelete: true,
+      showImport: true,
+      showExport: true,
+      showDetailAction: false,
+      showEditAction: false,
+      showDeleteAction: false
+    },
     columns: [
       { title: '资产编码', key: 'assetsCode', sortable: true },
       { title: '资产名称', key: 'assetsName' },
@@ -330,6 +340,16 @@ const MODULES = {
   'intangible-assets': {
     title: '无形资产',
     prefix: 'IA',
+    ui: {
+      showQuery: true,
+      showCreate: true,
+      showBatchDelete: true,
+      showImport: true,
+      showExport: true,
+      showDetailAction: false,
+      showEditAction: false,
+      showDeleteAction: false
+    },
     columns: [
       { title: '资产编码', key: 'assetsCode', sortable: true },
       { title: '资产名称', key: 'assetsName' },
@@ -427,6 +447,16 @@ const MODULES = {
   'personnel-file': {
     title: '人员档案',
     prefix: 'PF',
+    ui: {
+      showQuery: true,
+      showCreate: true,
+      showBatchDelete: true,
+      showImport: true,
+      showExport: true,
+      showDetailAction: false,
+      showEditAction: false,
+      showDeleteAction: false
+    },
     columns: [
       { title: '员工工号', key: 'employeeAccount', sortable: true },
       { title: '员工姓名', key: 'employeeName' },
@@ -544,6 +574,16 @@ const MODULES = {
   'material-archive': {
     title: '物料档案',
     prefix: 'MA',
+    ui: {
+      showQuery: true,
+      showCreate: true,
+      showBatchDelete: true,
+      showImport: true,
+      showExport: true,
+      showDetailAction: false,
+      showEditAction: false,
+      showDeleteAction: false
+    },
     columns: [
       { title: '物料编码', key: 'materialCode', sortable: true },
       { title: '物料名称', key: 'materialName' },
