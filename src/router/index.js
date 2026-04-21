@@ -27,14 +27,14 @@ import SystemListPage from '../modules/system/pages/ListPage.vue'
 import SystemDetailPage from '../modules/system/pages/DetailPage.vue'
 
 const companyModules = [
-  { path: 'company/basic-info', title: '企业基本信息', key: 'basic-info' },
-  { path: 'company/bank-account', title: '银行账户', key: 'bank-account' },
-  { path: 'company/fixed-assets', title: '固定资产', key: 'fixed-assets' },
-  { path: 'company/accounting-code', title: '会计科目', key: 'accounting-code' },
-  { path: 'company/holiday-settings', title: '节假日设置', key: 'holiday-settings' },
-  { path: 'company/intangible-assets', title: '无形资产', key: 'intangible-assets' },
+  { path: 'company/basic-info', title: '基本信息', key: 'basic-info' },
+  { path: 'company/holiday-settings', title: '假期设置', key: 'holiday-settings' },
+  { path: 'company/personnel-file', title: '人员档案', key: 'personnel-file' },
   { path: 'company/intellectual-property', title: '知识产权', key: 'intellectual-property' },
-  { path: 'company/personnel-file', title: '人员档案', key: 'personnel-file' }
+  { path: 'company/intangible-assets', title: '无形资产', key: 'intangible-assets' },
+  { path: 'company/fixed-assets', title: '固定资产', key: 'fixed-assets' },
+  { path: 'company/leased-assets', title: '经营租赁资产', key: 'leased-assets' },
+  { path: 'company/accounting-code', title: '会计科目对照表', key: 'accounting-code' }
 ]
 
 const companyRoutes = companyModules.flatMap((m) => [

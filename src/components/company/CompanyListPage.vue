@@ -42,7 +42,22 @@ const page = ref(1)
 const pageSize = ref(8)
 const total = ref(0)
 const rows = ref([])
-const meta = ref({ title: '', columns: [], querySchema: [], formSchema: [] })
+const meta = ref({
+  title: '',
+  columns: [],
+  querySchema: [],
+  formSchema: [],
+  ui: {
+    showQuery: true,
+    showCreate: true,
+    showBatchDelete: true,
+    showImport: true,
+    showExport: true,
+    showDetailAction: true,
+    showEditAction: true,
+    showDeleteAction: true
+  }
+})
 const query = ref({})
 const modalVisible = ref(false)
 const editingRow = ref(null)
@@ -58,8 +73,16 @@ const tableColumns = computed(() => {
     sorter: !!col.sortable
   }))
 
+  const actionButtons = []
+  if (meta.value.ui.showDetailAction) actionButtons.push('detail')
+  if (meta.value.ui.showEditAction) actionButtons.push('edit')
+  if (meta.value.ui.showDeleteAction) actionButtons.push('delete')
+
+  const hasActions = actionButtons.length > 0
+  const actionWidth = Math.max(90, actionButtons.length * 72 + 20)
+
   return [
-    { type: 'selection', width: 44 },
+    ...(meta.value.ui.showBatchDelete ? [{ type: 'selection', width: 44 }] : []),
     ...base,
     {
       title: '状态',
@@ -67,30 +90,32 @@ const tableColumns = computed(() => {
       width: 96,
       render: (row) => h(NTag, { size: 'small', type: row.status === '启用' ? 'success' : row.status === '停用' ? 'error' : 'warning' }, { default: () => row.status || '-' })
     },
-    {
+    ...(hasActions ? [{
       title: '操作',
       key: 'actions',
-      width: 250,
+      width: actionWidth,
       render: (row) =>
         h(NSpace, { size: 6 }, {
           default: () => [
-            h(NButton, { text: true, type: 'primary', onClick: () => viewDetail(row) }, { default: () => '详情' }),
-            h(NButton, { text: true, onClick: () => editRow(row) }, { default: () => '编辑' }),
-            h(
-              NButton,
-              {
-                text: true,
-                type: 'error',
-                onClick: async () => {
-                  if (!window.confirm('确认删除该条记录吗？')) return
-                  await removeRow(row.id)
-                }
-              },
-              { default: () => '删除' }
-            )
+            ...(meta.value.ui.showDetailAction ? [h(NButton, { text: true, type: 'primary', onClick: () => viewDetail(row) }, { default: () => '详情' })] : []),
+            ...(meta.value.ui.showEditAction ? [h(NButton, { text: true, onClick: () => editRow(row) }, { default: () => '编辑' })] : []),
+            ...(meta.value.ui.showDeleteAction
+              ? [h(
+                NButton,
+                {
+                  text: true,
+                  type: 'error',
+                  onClick: async () => {
+                    if (!window.confirm('确认删除该条记录吗？')) return
+                    await removeRow(row.id)
+                  }
+                },
+                { default: () => '删除' }
+              )]
+              : [])
           ]
         })
-    }
+    }] : [])
   ]
 })
 
@@ -141,6 +166,7 @@ async function resetQuery() {
 }
 
 function createRow() {
+  if (!meta.value.ui.showCreate) return
   router.push(`/${props.routeBase}/${props.moduleKey}/create`)
 }
 
@@ -180,6 +206,7 @@ async function removeRow(id) {
 }
 
 async function batchDelete() {
+  if (!meta.value.ui.showBatchDelete) return
   if (!selectedRowKeys.value.length) return
   if (!window.confirm(`确认批量删除 ${selectedRowKeys.value.length} 条记录吗？`)) return
   submitting.value = true
@@ -196,6 +223,7 @@ async function batchDelete() {
 }
 
 async function handleExport() {
+  if (!meta.value.ui.showExport) return
   submitting.value = true
   try {
     const data = await exportArchiveRecords({
@@ -224,6 +252,7 @@ async function handleExport() {
 }
 
 function triggerImport() {
+  if (!meta.value.ui.showImport) return
   importInputRef.value?.click()
 }
 
@@ -300,7 +329,7 @@ useModuleListReload(
 </script>
 
 <template>
-  <n-card class="filter-card" :bordered="false">
+  <n-card v-if="meta.ui.showQuery && meta.querySchema.length" class="filter-card" :bordered="false">
     <n-form inline>
       <n-form-item v-for="field in meta.querySchema" :key="field.key" :label="field.label">
         <n-select
@@ -331,10 +360,19 @@ useModuleListReload(
   <n-card :title="meta.title" class="archive-card" :bordered="false">
     <template #header-extra>
       <n-space>
-        <n-button type="primary" size="small" @click="createRow">新增</n-button>
-        <n-button size="small" type="error" ghost :disabled="!selectedRowKeys.length" @click="batchDelete">批量删除</n-button>
-        <n-button size="small" @click="triggerImport">导入</n-button>
-        <n-button size="small" @click="handleExport">导出</n-button>
+        <n-button v-if="meta.ui.showCreate" type="primary" size="small" @click="createRow">新增</n-button>
+        <n-button
+          v-if="meta.ui.showBatchDelete"
+          size="small"
+          type="error"
+          ghost
+          :disabled="!selectedRowKeys.length"
+          @click="batchDelete"
+        >
+          批量删除
+        </n-button>
+        <n-button v-if="meta.ui.showImport" size="small" @click="triggerImport">导入</n-button>
+        <n-button v-if="meta.ui.showExport" size="small" @click="handleExport">导出</n-button>
       </n-space>
     </template>
 

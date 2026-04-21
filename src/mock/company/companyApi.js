@@ -3,8 +3,18 @@ const BOOLEAN_OPTIONS = ['是', '否']
 
 const MODULES = {
   'basic-info': {
-    title: '企业基本信息',
+    title: '基本信息',
     prefix: 'BI',
+    ui: {
+      showQuery: false,
+      showCreate: false,
+      showBatchDelete: false,
+      showImport: false,
+      showExport: false,
+      showDetailAction: false,
+      showEditAction: true,
+      showDeleteAction: false
+    },
     columns: [
       { title: '公司名称', key: 'name', sortable: true },
       { title: '统一社会信用代码', key: 'creditCode', sortable: true },
@@ -14,13 +24,7 @@ const MODULES = {
       { title: '联系电话', key: 'companyPhone' },
       { title: '更新日期', key: 'updatedAt', sortable: true }
     ],
-    querySchema: [
-      { key: 'keyword', label: '关键字', type: 'input', placeholder: '公司名称/信用代码/法人', match: 'fuzzy' },
-      { key: 'enterpriseType', label: '企业类型', type: 'select', match: 'exact', options: ['有限责任公司', '股份有限公司', '国有企业'] },
-      { key: 'taxpayerQualification', label: '纳税人资质', type: 'select', match: 'exact', options: ['一般纳税人', '小规模纳税人'] },
-      { key: 'highTechFieldIf', label: '高新企业', type: 'select', match: 'exact', options: BOOLEAN_OPTIONS },
-      { key: 'status', label: '状态', type: 'select', match: 'exact', options: STATUS_OPTIONS }
-    ],
+    querySchema: [],
     formSchema: [
       { key: 'ispId', label: '服务商', type: 'input', required: true, min: 2, max: 40 },
       { key: 'name', label: '公司名称', type: 'input', required: true, min: 2, max: 80 },
@@ -194,24 +198,89 @@ const MODULES = {
       }
     ]
   },
+  'leased-assets': {
+    title: '经营租赁资产',
+    prefix: 'LA',
+    columns: [
+      { title: '资产编码', key: 'assetsCode', sortable: true },
+      { title: '资产名称', key: 'assetsName' },
+      { title: '资产类型', key: 'fixAssetsType' },
+      { title: '规格型号', key: 'fixAssetsModel' },
+      { title: '使用人工号', key: 'userAccount' },
+      { title: '使用人姓名', key: 'userName' },
+      { title: '使用部门', key: 'useDepartment' },
+      { title: '功率（kW）', key: 'power' },
+      { title: '资产产研性质', key: 'productionResearchNature' },
+      { title: '资产每天运行时长', key: 'assetsRunningTime' },
+      { title: '参与研发活动最高比例(%)', key: 'participationRatio' },
+      { title: '更新日期', key: 'updatedAt', sortable: true }
+    ],
+    querySchema: [
+      { key: 'assetsCode', label: '资产编码', type: 'input', match: 'fuzzy' },
+      { key: 'assetsName', label: '资产名称', type: 'input', match: 'fuzzy' },
+      { key: 'fixAssetsType', label: '资产类型', type: 'select', match: 'exact', options: ['检测设备', '生产设备', '办公设备'] },
+      { key: 'useDepartment', label: '使用部门', type: 'input', match: 'fuzzy' },
+      { key: 'productionResearchNature', label: '资产产研性质', type: 'select', match: 'exact', options: ['研发专用', '研发与生产共用', '生产专用'] },
+      { key: 'status', label: '状态', type: 'select', match: 'exact', options: STATUS_OPTIONS }
+    ],
+    formSchema: [
+      { key: 'assetsCode', label: '资产编码', type: 'input', required: true, min: 4, max: 32, pattern: '^[A-Z0-9-]+$', patternMessage: '资产编码仅支持大写字母、数字、短横线' },
+      { key: 'assetsName', label: '资产名称', type: 'input', required: true, min: 2, max: 80 },
+      { key: 'fixAssetsType', label: '资产类型', type: 'select', options: ['检测设备', '生产设备', '办公设备'], required: true },
+      { key: 'productionResearchNature', label: '资产产研性质', type: 'select', options: ['研发专用', '研发与生产共用', '生产专用'], required: true },
+      { key: 'fixAssetsModel', label: '规格型号', type: 'input', required: false, max: 60 },
+      { key: 'userAccount', label: '使用人工号', type: 'input', required: false, max: 30, pattern: '^[A-Z0-9-]+$', patternMessage: '使用人工号格式不正确' },
+      { key: 'userName', label: '使用人姓名', type: 'input', required: false, max: 20, pattern: '^[\\u4e00-\\u9fa5A-Za-z·]{2,20}$', patternMessage: '使用人姓名格式不正确' },
+      { key: 'useDepartment', label: '使用部门', type: 'input', required: false, max: 40 },
+      { key: 'power', label: '功率（kW）', type: 'number', required: false, minValue: 0, maxValue: 99999 },
+      { key: 'assetsRunningTime', label: '资产每天运行时长', type: 'number', required: false, minValue: 0, maxValue: 24 },
+      { key: 'participationRatio', label: '参与研发活动最高比例(%)', type: 'number', required: true, minValue: 0, maxValue: 100 },
+      { key: 'unparticipationType', label: '未参与研发活动归属项目类型', type: 'select', options: ['研发公共类项目', '管理费用类项目', '生产成本类项目'], required: true },
+      { key: 'fixAssetsAttachment', label: '资产附件', type: 'input', required: false, max: 200 },
+      { key: 'status', label: '状态', type: 'select', options: STATUS_OPTIONS, required: true }
+    ],
+    rows: [
+      {
+        id: 'LA001',
+        assetsCode: 'LA-2026-001',
+        assetsName: '租赁试验平台',
+        fixAssetsType: '检测设备',
+        productionResearchNature: '研发与生产共用',
+        fixAssetsModel: 'LEASE-A1',
+        userAccount: 'EMP-1003',
+        userName: '周强',
+        useDepartment: '研发测试部',
+        assetsRunningTime: 8,
+        participationRatio: 75,
+        unparticipationType: '研发公共类项目',
+        power: 2.6,
+        fixAssetsAttachment: 'https://example.com/la001.pdf',
+        status: '启用',
+        updatedAt: '2026-04-06'
+      }
+    ]
+  },
   'accounting-code': {
-    title: '会计科目',
+    title: '会计科目对照表',
     prefix: 'AC',
+    ui: {
+      showQuery: false,
+      showCreate: false,
+      showBatchDelete: false,
+      showImport: true,
+      showExport: true,
+      showDetailAction: true,
+      showEditAction: true,
+      showDeleteAction: false
+    },
     columns: [
       { title: '一级费用类型', key: 'firstLevelExpense' },
       { title: '二级费用类型', key: 'secondLevelExpense' },
       { title: '对应最末级科目代码', key: 'accountingCode' },
       { title: '对应最末级会计科目名称', key: 'accountingName' },
-      { title: '备注', key: 'remark' },
-      { title: '更新日期', key: 'updatedAt', sortable: true }
+      { title: '备注', key: 'remark' }
     ],
-    querySchema: [
-      { key: 'firstLevelExpense', label: '一级费用类型', type: 'input', match: 'fuzzy' },
-      { key: 'secondLevelExpense', label: '二级费用类型', type: 'input', match: 'fuzzy' },
-      { key: 'accountingCode', label: '会计科目代码', type: 'input', match: 'fuzzy' },
-      { key: 'accountingName', label: '会计科目名称', type: 'input', match: 'fuzzy' },
-      { key: 'status', label: '状态', type: 'select', match: 'exact', options: STATUS_OPTIONS }
-    ],
+    querySchema: [],
     formSchema: [
       { key: 'firstLevelExpense', label: '一级费用类型', type: 'input', required: true, min: 2, max: 30 },
       { key: 'secondLevelExpense', label: '二级费用类型', type: 'input', required: true, min: 2, max: 30 },
@@ -234,7 +303,7 @@ const MODULES = {
     ]
   },
   'holiday-settings': {
-    title: '节假日设置',
+    title: '假期设置',
     prefix: 'HS',
     columns: [
       { title: '日期', key: 'specialDates', sortable: true },
@@ -1002,7 +1071,18 @@ export async function fetchArchiveModuleMeta(moduleKey) {
   await delay()
   const cfg = MODULES[moduleKey]
   if (!cfg) throw new Error('模块不存在')
-  return clone({ title: cfg.title, columns: cfg.columns, querySchema: cfg.querySchema, formSchema: cfg.formSchema })
+  const ui = {
+    showQuery: true,
+    showCreate: true,
+    showBatchDelete: true,
+    showImport: true,
+    showExport: true,
+    showDetailAction: true,
+    showEditAction: true,
+    showDeleteAction: true,
+    ...cfg.ui
+  }
+  return clone({ title: cfg.title, columns: cfg.columns, querySchema: cfg.querySchema, formSchema: cfg.formSchema, ui })
 }
 
 export async function fetchArchiveList({ moduleKey, filters, page = 1, pageSize = 10, sortKey = '', sortOrder = '' }) {

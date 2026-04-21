@@ -54,14 +54,14 @@ const menuOptions = [
     label: '公司档案',
     icon: renderIcon(BusinessOutline),
     children: [
-      { key: '/company/basic-info', label: '企业基本信息', icon: renderIcon(DocumentTextOutline) },
-      { key: '/company/bank-account', label: '银行账户', icon: renderIcon(CardOutline) },
-      { key: '/company/fixed-assets', label: '固定资产', icon: renderIcon(CubeOutline) },
-      { key: '/company/accounting-code', label: '会计科目', icon: renderIcon(PricetagsOutline) },
-      { key: '/company/holiday-settings', label: '节假日设置', icon: renderIcon(CalendarOutline) },
-      { key: '/company/intangible-assets', label: '无形资产', icon: renderIcon(FileTrayFullOutline) },
+      { key: '/company/basic-info', label: '基本信息', icon: renderIcon(DocumentTextOutline) },
+      { key: '/company/holiday-settings', label: '假期设置', icon: renderIcon(CalendarOutline) },
+      { key: '/company/personnel-file', label: '人员档案', icon: renderIcon(PeopleOutline) },
       { key: '/company/intellectual-property', label: '知识产权', icon: renderIcon(BriefcaseOutline) },
-      { key: '/company/personnel-file', label: '人员档案', icon: renderIcon(PeopleOutline) }
+      { key: '/company/intangible-assets', label: '无形资产', icon: renderIcon(FileTrayFullOutline) },
+      { key: '/company/fixed-assets', label: '固定资产', icon: renderIcon(CubeOutline) },
+      { key: '/company/leased-assets', label: '经营租赁资产', icon: renderIcon(LayersOutline) },
+      { key: '/company/accounting-code', label: '会计科目对照表', icon: renderIcon(PricetagsOutline) }
     ]
   },
   {
@@ -240,13 +240,13 @@ const expandableMenuKeys = new Set(
 
 const companyBaseKeys = [
   '/company/basic-info',
-  '/company/bank-account',
-  '/company/fixed-assets',
-  '/company/accounting-code',
   '/company/holiday-settings',
-  '/company/intangible-assets',
+  '/company/personnel-file',
   '/company/intellectual-property',
-  '/company/personnel-file'
+  '/company/intangible-assets',
+  '/company/fixed-assets',
+  '/company/leased-assets',
+  '/company/accounting-code',
 ]
 
 const projectBaseKeys = [
