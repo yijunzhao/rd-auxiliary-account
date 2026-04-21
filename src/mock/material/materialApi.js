@@ -2,15 +2,15 @@ const STATUS_OPTIONS = ['启用', '停用', '草稿']
 
 const MODULE_SPECS = [
   { key: 'material-archive', title: '物料档案', prefix: 'MA' },
+  { key: 'sample-stock-in', title: '样品及其他入库', prefix: 'SI' },
+  { key: 'sample-stock-out', title: '样品及其他出库', prefix: 'SO' },
+  { key: 'material-flow-summary', title: '样品及其他文档导出', prefix: 'MS' },
+  { key: 'sample-other-stock-summary', title: '样品及其他汇总', prefix: 'SS' },
+  { key: 'requisition-form', title: '领料申请', prefix: 'RQ' },
   { key: 'material-flow-detail', title: '物料流转明细', prefix: 'MF' },
   { key: 'origin-stock-file', title: '期初库存文件', prefix: 'OS' },
-  { key: 'sample-stock-in', title: '样品入库', prefix: 'SI' },
   { key: 'scrap-stock-in', title: '废料入库', prefix: 'RI' },
-  { key: 'sample-stock-out', title: '样品出库', prefix: 'SO' },
-  { key: 'scrap-stock-out', title: '废料出库', prefix: 'RO' },
-  { key: 'material-flow-summary', title: '物料流转汇总', prefix: 'MS' },
-  { key: 'sample-other-stock-summary', title: '样品及其他收发存汇总', prefix: 'SS' },
-  { key: 'requisition-form', title: '领料单', prefix: 'RQ' }
+  { key: 'scrap-stock-out', title: '废料出库', prefix: 'RO' }
 ]
 
 const DEFAULT_TOOLBAR = {

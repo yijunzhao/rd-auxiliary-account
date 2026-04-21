@@ -1685,6 +1685,29 @@ CONFIG_MODULE_SPECS.forEach((spec) => {
   MODULES[spec.key] = createConfigModule(spec)
 })
 
+const MODULE_TITLE_OVERRIDES = {
+  'project-info': '项目立项',
+  'project-collection-config': '任务分配',
+  'project-stage-change-apply': '阶段转换申请',
+  'project-suspend': '项目暂停/恢复',
+  'project-termination': '项目终止',
+  'project-stage-config': '项目结项',
+  'project-change': '项目变更',
+  'project-document': '项目文档管理',
+  'process-attendance': '人员考勤表',
+  'process-personnel-working-hours': '人员人工工时表',
+  'process-intangible-assets-working-hours': '无形资产工时表',
+  'process-fixed-assets-working-hours': '固定资产工时表',
+  'process-leased-assets-working-hours': '经营租赁资产工时表',
+  'process-export': '研发过程文档导出',
+  'process-personnel-input-working-form': '人员工时填报表单',
+  'process-assets-input-working-form': '资产工时填报表单'
+}
+
+Object.entries(MODULE_TITLE_OVERRIDES).forEach(([key, title]) => {
+  if (MODULES[key]) MODULES[key].title = title
+})
+
 const PROJECT_NAME_POOL = ['张敏', '王磊', '李娜', '周强', '陈杰', '刘洋', '赵婷', '孙浩', '吴迪', '郑楠', '冯倩', '郭凯']
 const PROJECT_TITLE_POOL = [
   '新一代智能配电控制器研发',

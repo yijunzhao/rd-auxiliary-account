@@ -7,7 +7,7 @@ const MODULE_SPECS = [
   { key: 'expense-depreciationandspread', title: '折旧与长期待摊费用', prefix: 'EDS' },
   { key: 'expense-intangible-assets-share', title: '无形资产摊销费用', prefix: 'EIA' },
   { key: 'expense-news-product-design', title: '新产品设计费等', prefix: 'ENP' },
-  { key: 'expense-equipment-adjustment', title: '装备调试费用', prefix: 'EEA' },
+  { key: 'expense-equipment-adjustment', title: '装配调试费用', prefix: 'EEA' },
   { key: 'expense-other-expense', title: '其他相关费用', prefix: 'EOE' },
   { key: 'expense-entrusted-research', title: '委托研发费用', prefix: 'EER' },
   { key: 'expense-offsetting-research', title: '应冲减研发费用', prefix: 'EOR' },
