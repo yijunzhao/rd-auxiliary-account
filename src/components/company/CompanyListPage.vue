@@ -141,8 +141,7 @@ async function resetQuery() {
 }
 
 function createRow() {
-  editingRow.value = null
-  modalVisible.value = true
+  router.push(`/${props.routeBase}/${props.moduleKey}/create`)
 }
 
 function editRow(row) {
@@ -332,7 +331,7 @@ useModuleListReload(
   <n-card :title="meta.title" class="archive-card" :bordered="false">
     <template #header-extra>
       <n-space>
-        <n-button type="primary" size="small" @click="createRow">新增档案</n-button>
+        <n-button type="primary" size="small" @click="createRow">新增</n-button>
         <n-button size="small" type="error" ghost :disabled="!selectedRowKeys.length" @click="batchDelete">批量删除</n-button>
         <n-button size="small" @click="triggerImport">导入</n-button>
         <n-button size="small" @click="handleExport">导出</n-button>
@@ -369,7 +368,7 @@ useModuleListReload(
 
   <archive-edit-modal
     v-model:show="modalVisible"
-    :title="editingRow ? '编辑档案' : '新增档案'"
+    :title="'编辑档案'"
     :form-schema="meta.formSchema"
     :row="editingRow"
     @save="saveRow"

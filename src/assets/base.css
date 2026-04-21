@@ -11,3 +11,14 @@ body {
 body {
   font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
 }
+
+/* Ensure list-page card header actions remain clickable across all modules. */
+.archive-card .n-card-header {
+  position: relative;
+}
+
+.archive-card .n-card-header__extra {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}

@@ -5,6 +5,7 @@ import DashboardLayout from '../layouts/DashboardLayout.vue'
 import DashboardAnalysisPage from '../modules/dashboard/pages/AnalysisPage.vue'
 import CompanyListPage from '../modules/company/pages/ListPage.vue'
 import CompanyDetailPage from '../modules/company/pages/DetailPage.vue'
+import CompanyCreatePage from '../modules/company/pages/CreatePage.vue'
 import ProjectListPage from '../modules/project/pages/ListPage.vue'
 import ProjectDetailPage from '../modules/project/pages/DetailPage.vue'
 import ProcessListPage from '../modules/process/pages/ListPage.vue'
@@ -15,6 +16,7 @@ import ExpenseListPage from '../modules/expense/pages/ListPage.vue'
 import ExpenseDetailPage from '../modules/expense/pages/DetailPage.vue'
 import MaterialListPage from '../modules/material/pages/ListPage.vue'
 import MaterialDetailPage from '../modules/material/pages/DetailPage.vue'
+import MaterialCreatePage from '../modules/material/pages/CreatePage.vue'
 import SummaryListPage from '../modules/summary/pages/ListPage.vue'
 import SummaryDetailPage from '../modules/summary/pages/DetailPage.vue'
 import StatementsListPage from '../modules/statements/pages/ListPage.vue'
@@ -37,6 +39,7 @@ const companyModules = [
 
 const companyRoutes = companyModules.flatMap((m) => [
   { path: m.path, component: CompanyListPage, meta: { breadcrumb: `公司档案 / ${m.title}`, moduleKey: m.key } },
+  { path: `${m.path}/create`, component: CompanyCreatePage, meta: { breadcrumb: `公司档案 / ${m.title} / 新增`, moduleKey: m.key } },
   { path: `${m.path}/detail/:id`, component: CompanyDetailPage, meta: { breadcrumb: `公司档案 / ${m.title} / 详情`, moduleKey: m.key } }
 ])
 
@@ -128,6 +131,7 @@ const materialModules = [
 
 const materialRoutes = materialModules.flatMap((m) => [
   { path: m.path, component: MaterialListPage, meta: { breadcrumb: `样品及其他管理 / ${m.title}`, moduleKey: m.key } },
+  { path: `${m.path}/create`, component: MaterialCreatePage, meta: { breadcrumb: `样品及其他管理 / ${m.title} / 新增`, moduleKey: m.key } },
   { path: `${m.path}/detail/:id`, component: MaterialDetailPage, meta: { breadcrumb: `样品及其他管理 / ${m.title} / 详情`, moduleKey: m.key } }
 ])
 
