@@ -119,6 +119,12 @@ function close() {
   emit('update:show', false)
 }
 
+function getFieldPlaceholder(field) {
+  if (field?.placeholder) return field.placeholder
+  if (['select', 'date', 'daterange'].includes(field?.type)) return `请选择${field.label}`
+  return `请输入${field.label}`
+}
+
 async function submit() {
   if (props.readOnly) {
     close()
@@ -142,12 +148,12 @@ async function submit() {
     <n-form ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="110">
       <div class="form-grid" :style="{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }">
         <n-form-item v-for="field in formSchema" :key="field.key" :label="field.label" :path="field.key" :class="{ 'full-row': field.span === columns || field.type === 'textarea' }">
-          <n-select v-if="field.type === 'select'" v-model:value="model[field.key]" :options="(field.options || []).map((o) => ({ label: o, value: o }))" :disabled="readOnly" />
-          <n-date-picker v-else-if="field.type === 'date'" v-model:value="model[field.key]" type="date" value-format="yyyy-MM-dd" style="width: 100%" :disabled="readOnly" />
-          <n-date-picker v-else-if="field.type === 'daterange'" v-model:value="model[field.key]" type="daterange" value-format="yyyy-MM-dd" style="width: 100%" clearable :disabled="readOnly" />
-          <n-input-number v-else-if="field.type === 'number'" v-model:value="model[field.key]" :min="field.minValue" :max="field.maxValue" style="width: 100%" :disabled="readOnly" />
-          <n-input v-else-if="field.type === 'textarea'" v-model:value="model[field.key]" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" :disabled="readOnly" />
-          <n-input v-else v-model:value="model[field.key]" :disabled="readOnly" />
+          <n-select v-if="field.type === 'select'" v-model:value="model[field.key]" :options="(field.options || []).map((o) => ({ label: o, value: o }))" :placeholder="getFieldPlaceholder(field)" :disabled="readOnly" />
+          <n-date-picker v-else-if="field.type === 'date'" v-model:value="model[field.key]" type="date" value-format="yyyy-MM-dd" style="width: 100%" :placeholder="getFieldPlaceholder(field)" :disabled="readOnly" />
+          <n-date-picker v-else-if="field.type === 'daterange'" v-model:value="model[field.key]" type="daterange" value-format="yyyy-MM-dd" style="width: 100%" clearable :placeholder="['开始日期', '结束日期']" :disabled="readOnly" />
+          <n-input-number v-else-if="field.type === 'number'" v-model:value="model[field.key]" :min="field.minValue" :max="field.maxValue" style="width: 100%" :placeholder="getFieldPlaceholder(field)" :disabled="readOnly" />
+          <n-input v-else-if="field.type === 'textarea'" v-model:value="model[field.key]" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" :placeholder="getFieldPlaceholder(field)" :disabled="readOnly" />
+          <n-input v-else v-model:value="model[field.key]" :placeholder="getFieldPlaceholder(field)" :disabled="readOnly" />
         </n-form-item>
       </div>
     </n-form>

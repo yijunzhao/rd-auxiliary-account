@@ -54,14 +54,14 @@ const menuOptions = [
     label: '公司档案',
     icon: renderIcon(BusinessOutline),
     children: [
-      { key: '/company/basic-info', label: '基本信息', icon: renderIcon(DocumentTextOutline) },
-      { key: '/company/holiday-settings', label: '假期设置', icon: renderIcon(CalendarOutline) },
-      { key: '/company/personnel-file', label: '人员档案', icon: renderIcon(PeopleOutline) },
-      { key: '/company/intellectual-property', label: '知识产权', icon: renderIcon(BriefcaseOutline) },
-      { key: '/company/intangible-assets', label: '无形资产', icon: renderIcon(FileTrayFullOutline) },
+      { key: '/company/basic-info', label: '企业基本信息', icon: renderIcon(DocumentTextOutline) },
+      { key: '/company/bank-account', label: '银行账户', icon: renderIcon(CardOutline) },
       { key: '/company/fixed-assets', label: '固定资产', icon: renderIcon(CubeOutline) },
-      { key: '/company/leased-assets', label: '经营租赁资产', icon: renderIcon(LayersOutline) },
-      { key: '/company/accounting-code', label: '会计科目对照表', icon: renderIcon(PricetagsOutline) }
+      { key: '/company/accounting-code', label: '会计科目', icon: renderIcon(PricetagsOutline) },
+      { key: '/company/holiday-settings', label: '节假日设置', icon: renderIcon(CalendarOutline) },
+      { key: '/company/intangible-assets', label: '无形资产', icon: renderIcon(FileTrayFullOutline) },
+      { key: '/company/intellectual-property', label: '知识产权', icon: renderIcon(BriefcaseOutline) },
+      { key: '/company/personnel-file', label: '人员档案', icon: renderIcon(PeopleOutline) }
     ]
   },
   {
@@ -69,13 +69,31 @@ const menuOptions = [
     label: '项目管理',
     icon: renderIcon(GitNetworkOutline),
     children: [
-      { key: '/project/project-info', label: '项目立项', icon: renderIcon(LayersOutline) },
-      { key: '/project/project-collection-config', label: '任务分配', icon: renderIcon(FunnelOutline) },
+      { key: '/project/project-info', label: '项目信息', icon: renderIcon(LayersOutline) },
+      { key: '/project/project-change', label: '项目变更信息', icon: renderIcon(SwapHorizontalOutline) },
       { key: '/project/project-suspend', label: '项目暂停/恢复', icon: renderIcon(PauseCircleOutline) },
-      { key: '/project/project-termination', label: '项目终止', icon: renderIcon(StopCircleOutline) },
-      { key: '/project/project-stage-change-apply', label: '项目结项', icon: renderIcon(GitMergeOutline) },
-      { key: '/project/project-change', label: '项目变更', icon: renderIcon(SwapHorizontalOutline) },
-      { key: '/project/project-document', label: '项目文档管理', icon: renderIcon(DocumentAttachOutline) }
+      { key: '/project/project-termination', label: '项目终止表', icon: renderIcon(StopCircleOutline) },
+      { key: '/project/project-document', label: '项目文档管理', icon: renderIcon(DocumentAttachOutline) },
+      { key: '/project/project-collection-config', label: '项目归集配置', icon: renderIcon(FunnelOutline) },
+      { key: '/project/project-stage-config', label: '项目阶段配置', icon: renderIcon(GitMergeOutline) },
+      { key: '/project/project-stage-change-apply', label: '项目阶段转换申请', icon: renderIcon(LibraryOutline) }
+    ]
+  },
+  {
+    key: 'material',
+    label: '样品及其他管理',
+    icon: renderIcon(BarChartOutline),
+    children: [
+      { key: '/material/material-archive', label: '物料档案', icon: renderIcon(ArchiveOutline) },
+      { key: '/material/material-flow-detail', label: '物料流转明细', icon: renderIcon(ListOutline) },
+      { key: '/material/origin-stock-file', label: '期初库存文件', icon: renderIcon(DocumentOutline) },
+      { key: '/material/sample-stock-in', label: '样品入库', icon: renderIcon(LogInOutline) },
+      { key: '/material/scrap-stock-in', label: '废料入库', icon: renderIcon(LogInOutline) },
+      { key: '/material/sample-stock-out', label: '样品出库', icon: renderIcon(LogOutOutline) },
+      { key: '/material/scrap-stock-out', label: '废料出库', icon: renderIcon(LogOutOutline) },
+      { key: '/material/material-flow-summary', label: '物料流转汇总', icon: renderIcon(StatsChartOutline) },
+      { key: '/material/sample-other-stock-summary', label: '样品及其他收发存汇总', icon: renderIcon(StatsChartOutline) },
+      { key: '/material/requisition-form', label: '领料单', icon: renderIcon(ClipboardOutline) }
     ]
   },
   {
@@ -83,10 +101,24 @@ const menuOptions = [
     label: '研发过程',
     icon: renderIcon(GitNetworkOutline),
     children: [
-      { key: '/process/intangible-assets-working-hours', label: '无形资产工时表', icon: renderIcon(FileTrayFullOutline) },
-      { key: '/process/fixed-assets-working-hours', label: '固定资产工时表', icon: renderIcon(CubeOutline) },
-      { key: '/process/leased-assets-working-hours', label: '经营租赁资产工时表', icon: renderIcon(LayersOutline) },
-      { key: '/process/export', label: '研发过程文档导出', icon: renderIcon(FolderOpenOutline) }
+      { key: '/process/cost-center', label: '成本中心', icon: renderIcon(BriefcaseOutline) },
+      { key: '/process/original-attendance-file', label: '原始考勤文件', icon: renderIcon(DocumentTextOutline) },
+      { key: '/process/attendance', label: '人员考勤', icon: renderIcon(PeopleOutline) },
+      { key: '/process/personnel-working-hours', label: '人员工时填报', icon: renderIcon(CalendarOutline) },
+      { key: '/process/fixed-assets-working-hours', label: '固定资产工时', icon: renderIcon(CubeOutline) },
+      { key: '/process/intangible-assets-working-hours', label: '无形资产工时', icon: renderIcon(FileTrayFullOutline) },
+      { key: '/process/leased-assets-working-hours', label: '租赁资产工时', icon: renderIcon(LayersOutline) },
+      { key: '/process/personnel-input-working-form', label: '人员投入工时分配表', icon: renderIcon(FunnelOutline) },
+      { key: '/process/assets-input-working-form', label: '资产投入工时分配表', icon: renderIcon(GitMergeOutline) },
+      { key: '/process/doc-appraisal-report', label: '项目立项报告', icon: renderIcon(DocumentAttachOutline) },
+      { key: '/process/doc-changes-document', label: '项目变更书', icon: renderIcon(SwapHorizontalOutline) },
+      { key: '/process/doc-final-acceptance-report', label: '项目验收报告', icon: renderIcon(CheckboxOutline) },
+      { key: '/process/doc-meeting-record', label: '项目会议纪要', icon: renderIcon(LibraryOutline) },
+      { key: '/process/doc-other-report', label: '其他过程资料', icon: renderIcon(DocumentTextOutline) },
+      { key: '/process/doc-test-report', label: '测试报告', icon: renderIcon(BarChartOutline) },
+      { key: '/process/files', label: '研发过程资料归档', icon: renderIcon(FolderOpenOutline) },
+      { key: '/process/export', label: '研发过程导出', icon: renderIcon(SwapHorizontalOutline) },
+      { key: '/process/research-export', label: '研发过程汇总导出', icon: renderIcon(StatsChartOutline) }
     ]
   },
   {
@@ -98,20 +130,14 @@ const menuOptions = [
       { key: '/expense/directinvestment', label: '直接投入费用', icon: renderIcon(LogInOutline) },
       { key: '/expense/depreciationandspread', label: '折旧与长期待摊费用', icon: renderIcon(StatsChartOutline) },
       { key: '/compliance/expense/cmexintangibleassetsshare/cmexIntangibleAssetsShareList', label: '无形资产摊销费用', icon: renderIcon(FileTrayFullOutline) },
-      { key: '/compliance/expense/cmexequipmentadjustment/cmexEquipmentAdjustmentList', label: '装配调试费用', icon: renderIcon(BuildOutline) },
+      { key: '/compliance/expense/cmexnewsproductdesign/cmexNewsProductDesignList', label: '新产品设计费等', icon: renderIcon(DocumentAttachOutline) },
+      { key: '/compliance/expense/cmexequipmentadjustment/cmexEquipmentAdjustmentList', label: '装备调试费用', icon: renderIcon(BuildOutline) },
       { key: '/compliance/expense/cmexotherexpense/cmexOtherExpenseList', label: '其他相关费用', icon: renderIcon(ListOutline) },
       { key: '/compliance/expense/cmexentrustedresearch/cmexEntrustedResearchList', label: '委托研发费用', icon: renderIcon(LibraryOutline) },
       { key: '/compliance/expense/cmexoffsettingresearch/cmexOffsettingResearchList', label: '应冲减研发费用', icon: renderIcon(SwapHorizontalOutline) },
       { key: '/compliance/expense/cmexauditadjustments/cmexAuditAdjustmentsList', label: '审计调整研发费用', icon: renderIcon(CheckboxOutline) },
-      { key: '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList', label: '会计凭证导入', icon: renderIcon(DocumentOutline) }
-    ]
-  },
-  {
-    key: 'material',
-    label: '样品及其他管理',
-    icon: renderIcon(BarChartOutline),
-    children: [
-      { key: '/material/material-archive', label: '物料档案', icon: renderIcon(ArchiveOutline) }
+      { key: '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList', label: '会计凭证导入', icon: renderIcon(DocumentOutline) },
+      { key: '/expense/developAndExpensesFile', label: '研发材料报废单及盘点表', icon: renderIcon(ClipboardOutline) }
     ]
   },
   {
@@ -128,7 +154,11 @@ const menuOptions = [
     label: '报表生成及查询',
     icon: renderIcon(DocumentTextOutline),
     children: [
-      { key: '/statements/research-expenses', label: '研发支出多口径报表', icon: renderIcon(StatsChartOutline) }
+      { key: '/statements/research-expenses', label: '研发支出多口径报表', icon: renderIcon(StatsChartOutline) },
+      { key: '/statements/keep-information', label: '加计扣除留存备查资料', icon: renderIcon(DocumentOutline) },
+      { key: '/statements/research-deducted', label: '加计扣除相关报表', icon: renderIcon(ListOutline) },
+      { key: '/statements/high-tech-reports', label: '高新技术企业相关报表', icon: renderIcon(BriefcaseOutline) },
+      { key: '/statements/statistics-reports', label: '研发活动统计报表', icon: renderIcon(BarChartOutline) }
     ]
   },
   {
@@ -136,7 +166,9 @@ const menuOptions = [
     label: '流程管理',
     icon: renderIcon(GitNetworkOutline),
     children: [
-      { key: '/flowable/model/modelDesigner', label: '流程模型', icon: renderIcon(GitMergeOutline) }
+      { key: '/flowable/model/modelDesigner', label: '流程模型', icon: renderIcon(GitMergeOutline) },
+      { key: '/flowable/SysCustomForm/SysCustomFormList', label: '业务表单', icon: renderIcon(DocumentAttachOutline) },
+      { key: '/flowable/task/record/index', label: '流程申请', icon: renderIcon(LibraryOutline) }
     ]
   },
   {
@@ -147,7 +179,9 @@ const menuOptions = [
       { key: '/flowable/task/allprocess/index', label: '所有任务', icon: renderIcon(ListOutline) },
       { key: '/flowable/task/myprocess/index', label: '我的任务', icon: renderIcon(PeopleOutline) },
       { key: '/flowable/task/todo/index', label: '待办任务', icon: renderIcon(CalendarOutline) },
-      { key: '/flowable/task/finished/index', label: '已办任务', icon: renderIcon(CheckboxOutline) }
+      { key: '/flowable/task/finished/index', label: '已办任务', icon: renderIcon(CheckboxOutline) },
+      { key: '/flowable/FlowCc/FowCcList', label: '抄送我的', icon: renderIcon(DocumentOutline) },
+      { key: '/flowable/MyCc/MyCcList', label: '我的抄送', icon: renderIcon(DocumentTextOutline) }
     ]
   },
   {
@@ -206,34 +240,58 @@ const expandableMenuKeys = new Set(
 
 const companyBaseKeys = [
   '/company/basic-info',
-  '/company/holiday-settings',
-  '/company/personnel-file',
-  '/company/intellectual-property',
-  '/company/intangible-assets',
+  '/company/bank-account',
   '/company/fixed-assets',
-  '/company/leased-assets',
   '/company/accounting-code',
+  '/company/holiday-settings',
+  '/company/intangible-assets',
+  '/company/intellectual-property',
+  '/company/personnel-file'
 ]
 
 const projectBaseKeys = [
   '/project/project-info',
-  '/project/project-collection-config',
+  '/project/project-change',
   '/project/project-suspend',
   '/project/project-termination',
-  '/project/project-stage-change-apply',
-  '/project/project-change',
-  '/project/project-document'
+  '/project/project-document',
+  '/project/project-collection-config',
+  '/project/project-stage-config',
+  '/project/project-stage-change-apply'
 ]
 
 const materialBaseKeys = [
-  '/material/material-archive'
+  '/material/material-archive',
+  '/material/material-flow-detail',
+  '/material/origin-stock-file',
+  '/material/sample-stock-in',
+  '/material/scrap-stock-in',
+  '/material/sample-stock-out',
+  '/material/scrap-stock-out',
+  '/material/material-flow-summary',
+  '/material/sample-other-stock-summary',
+  '/material/requisition-form'
 ]
 
 const processBaseKeys = [
-  '/process/intangible-assets-working-hours',
+  '/process/cost-center',
+  '/process/original-attendance-file',
+  '/process/attendance',
+  '/process/personnel-working-hours',
   '/process/fixed-assets-working-hours',
+  '/process/intangible-assets-working-hours',
   '/process/leased-assets-working-hours',
-  '/process/export'
+  '/process/personnel-input-working-form',
+  '/process/assets-input-working-form',
+  '/process/doc-appraisal-report',
+  '/process/doc-changes-document',
+  '/process/doc-final-acceptance-report',
+  '/process/doc-meeting-record',
+  '/process/doc-other-report',
+  '/process/doc-test-report',
+  '/process/files',
+  '/process/export',
+  '/process/research-export'
 ]
 
 const expenseBaseKeys = [
@@ -241,12 +299,14 @@ const expenseBaseKeys = [
   '/expense/directinvestment',
   '/expense/depreciationandspread',
   '/compliance/expense/cmexintangibleassetsshare/cmexIntangibleAssetsShareList',
+  '/compliance/expense/cmexnewsproductdesign/cmexNewsProductDesignList',
   '/compliance/expense/cmexequipmentadjustment/cmexEquipmentAdjustmentList',
   '/compliance/expense/cmexotherexpense/cmexOtherExpenseList',
   '/compliance/expense/cmexentrustedresearch/cmexEntrustedResearchList',
   '/compliance/expense/cmexoffsettingresearch/cmexOffsettingResearchList',
   '/compliance/expense/cmexauditadjustments/cmexAuditAdjustmentsList',
-  '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList'
+  '/compliance/expense/cmexaccountingvouchersimport/cmexAccountingVouchersImportList',
+  '/expense/developAndExpensesFile'
 ]
 
 const allocationBaseKeys = [
@@ -255,18 +315,26 @@ const allocationBaseKeys = [
 ]
 
 const statementBaseKeys = [
-  '/statements/research-expenses'
+  '/statements/research-expenses',
+  '/statements/keep-information',
+  '/statements/research-deducted',
+  '/statements/high-tech-reports',
+  '/statements/statistics-reports'
 ]
 
 const flowBaseKeys = [
-  '/flowable/model/modelDesigner'
+  '/flowable/model/modelDesigner',
+  '/flowable/SysCustomForm/SysCustomFormList',
+  '/flowable/task/record/index'
 ]
 
 const taskBaseKeys = [
   '/flowable/task/allprocess/index',
   '/flowable/task/myprocess/index',
   '/flowable/task/todo/index',
-  '/flowable/task/finished/index'
+  '/flowable/task/finished/index',
+  '/flowable/FlowCc/FowCcList',
+  '/flowable/MyCc/MyCcList'
 ]
 
 const systemBaseKeys = [

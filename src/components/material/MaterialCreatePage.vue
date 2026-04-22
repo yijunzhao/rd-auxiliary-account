@@ -112,6 +112,12 @@ async function goBack() {
   await router.push(listPath.value)
 }
 
+function getFieldPlaceholder(field) {
+  if (field?.placeholder) return field.placeholder
+  if (['select', 'date', 'daterange'].includes(field?.type)) return `请选择${field.label}`
+  return `请输入${field.label}`
+}
+
 async function submit() {
   await formRef.value?.validate()
   submitting.value = true
@@ -156,12 +162,12 @@ useModuleListReload(
           :path="field.key"
           :class="{ 'full-row': field.type === 'textarea' || field.span === 2 }"
         >
-          <n-select v-if="field.type === 'select'" v-model:value="model[field.key]" :options="(field.options || []).map((o) => ({ label: o, value: o }))" />
-          <n-date-picker v-else-if="field.type === 'date'" v-model:value="model[field.key]" type="date" value-format="yyyy-MM-dd" style="width: 100%" />
-          <n-date-picker v-else-if="field.type === 'daterange'" v-model:value="model[field.key]" type="daterange" value-format="yyyy-MM-dd" style="width: 100%" clearable />
-          <n-input-number v-else-if="field.type === 'number'" v-model:value="model[field.key]" :min="field.minValue" :max="field.maxValue" style="width: 100%" />
-          <n-input v-else-if="field.type === 'textarea'" v-model:value="model[field.key]" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" />
-          <n-input v-else v-model:value="model[field.key]" />
+          <n-select v-if="field.type === 'select'" v-model:value="model[field.key]" :options="(field.options || []).map((o) => ({ label: o, value: o }))" :placeholder="getFieldPlaceholder(field)" />
+          <n-date-picker v-else-if="field.type === 'date'" v-model:value="model[field.key]" type="date" value-format="yyyy-MM-dd" style="width: 100%" :placeholder="getFieldPlaceholder(field)" />
+          <n-date-picker v-else-if="field.type === 'daterange'" v-model:value="model[field.key]" type="daterange" value-format="yyyy-MM-dd" style="width: 100%" clearable :placeholder="['开始日期', '结束日期']" />
+          <n-input-number v-else-if="field.type === 'number'" v-model:value="model[field.key]" :min="field.minValue" :max="field.maxValue" style="width: 100%" :placeholder="getFieldPlaceholder(field)" />
+          <n-input v-else-if="field.type === 'textarea'" v-model:value="model[field.key]" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" :placeholder="getFieldPlaceholder(field)" />
+          <n-input v-else v-model:value="model[field.key]" :placeholder="getFieldPlaceholder(field)" />
         </n-form-item>
       </div>
     </n-form>
