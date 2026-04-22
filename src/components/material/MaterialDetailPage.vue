@@ -54,6 +54,16 @@ async function loadDetail() {
 }
 
 function goBack() {
+  const listPath = route.meta?.listPath
+  if (typeof listPath === 'string' && listPath.startsWith('/')) {
+    router.push(listPath)
+    return
+  }
+  const currentPath = route.path || ''
+  if (currentPath.includes('/detail/')) {
+    router.push(currentPath.replace(/\/detail\/[^/]+$/, ''))
+    return
+  }
   router.push(`/${props.routeBase}/${props.moduleKey}`)
 }
 

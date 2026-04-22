@@ -1,6 +1,6 @@
 <script setup>
 import { computed, h, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   NButton,
   NCard,
@@ -35,6 +35,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const route = useRoute()
 const message = useMessage()
 const loading = ref(false)
 const submitting = ref(false)
@@ -167,7 +168,7 @@ async function resetQuery() {
 
 function createRow() {
   if (!meta.value.ui.showCreate) return
-  router.push(`/${props.routeBase}/${props.moduleKey}/create`)
+  router.push(`${route.path.replace(/\/$/, '')}/create`)
 }
 
 function editRow(row) {
@@ -286,7 +287,7 @@ async function onImportFileChange(event) {
 }
 
 function viewDetail(row) {
-  router.push(`/${props.routeBase}/${props.moduleKey}/detail/${row.id}`)
+  router.push(`${route.path.replace(/\/$/, '')}/detail/${row.id}`)
 }
 
 async function onPageChange(p) {

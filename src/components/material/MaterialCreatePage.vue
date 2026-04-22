@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { NButton, NCard, NDatePicker, NForm, NFormItem, NInput, NInputNumber, NSelect, NSpace, useMessage } from 'naive-ui'
 import { fetchArchiveModuleMeta, saveArchiveRecord } from '../../mock/company/companyApi'
 import { useModuleListReload } from '../../composables/useModuleListReload'
@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const route = useRoute()
 const message = useMessage()
 const loading = ref(false)
 const submitting = ref(false)
@@ -100,8 +101,15 @@ async function loadMeta() {
   }
 }
 
-function goBack() {
-  router.push(`/${props.routeBase}/${props.moduleKey}`)
+const listPath = computed(() => {
+  if (typeof route.meta?.listPath === 'string' && route.meta.listPath) return route.meta.listPath
+  if (route.path.endsWith('/create')) return route.path.slice(0, -'/create'.length)
+  if (props.moduleKey) return `/${props.routeBase}/${props.moduleKey}`
+  return `/${props.routeBase}`
+})
+
+async function goBack() {
+  await router.push(listPath.value)
 }
 
 async function submit() {
